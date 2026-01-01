@@ -3,20 +3,12 @@ import bgImage from "@assets/generated_images/dark_abstract_glossy_grid_backgrou
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen w-full relative overflow-x-hidden text-foreground">
-      {/* Background Image Layer */}
-      <div 
-        className="fixed inset-0 z-0 opacity-40 pointer-events-none"
-        style={{
-          backgroundImage: `url(${bgImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      />
+    <div className="min-h-screen w-full relative overflow-x-hidden text-foreground bg-black">
+      {/* Subtle texture/grid layer instead of glossy image */}
+      <div className="fixed inset-0 z-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
       
-      {/* Overlay Gradient for better text readability */}
-      <div className="fixed inset-0 z-0 bg-gradient-to-b from-black/20 via-background/50 to-background pointer-events-none" />
+      {/* Overlay Gradient for deep dull black effect */}
+      <div className="fixed inset-0 z-0 bg-gradient-to-b from-zinc-950 via-black to-black pointer-events-none" />
 
       <Navbar />
       
@@ -24,7 +16,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {children}
       </main>
 
-      <footer className="relative z-10 border-t border-white/10 bg-black/40 backdrop-blur-md py-8">
+      <footer className="relative z-10 border-t border-white/5 bg-zinc-950/50 backdrop-blur-md py-8">
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
           <p>&copy; 2024 SB Services. All rights reserved.</p>
           <div className="flex gap-6">
