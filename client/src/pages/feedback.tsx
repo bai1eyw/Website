@@ -186,11 +186,11 @@ export default function FeedbackPage() {
         <h2 className="text-2xl font-bold text-white">Trust is our Priority</h2>
         <div className="flex flex-wrap justify-center gap-12">
           <div className="space-y-1">
-            <p className="text-4xl font-display font-bold text-primary">5000+</p>
+            <p className="text-4xl font-display font-bold text-primary">100+</p>
             <p className="text-xs uppercase tracking-widest text-muted-foreground">Orders Filled</p>
           </div>
           <div className="space-y-1">
-            <p className="text-4xl font-display font-bold text-primary">4.9/5</p>
+            <p className="text-4xl font-display font-bold text-primary">4.5/5</p>
             <p className="text-xs uppercase tracking-widest text-muted-foreground">Average Rating</p>
           </div>
           <div className="space-y-1">
