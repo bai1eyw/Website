@@ -32,16 +32,11 @@ export function Navbar() {
             <SheetContent side="left" className="glass border-r-white/10 bg-black/80 text-white">
               <div className="flex flex-col gap-4 mt-10">
                 {navItems.map((item) => (
-                  <Link key={item.path} href={item.path}>
-                    <a 
-                      className={cn(
-                        "text-lg font-medium transition-colors hover:text-primary",
-                        location === item.path ? "text-primary" : "text-white/70"
-                      )}
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {item.name}
-                    </a>
+                  <Link key={item.path} href={item.path} className={cn(
+                    "text-lg font-medium transition-colors hover:text-primary",
+                    location === item.path ? "text-primary" : "text-white/70"
+                  )} onClick={() => setIsOpen(false)}>
+                    {item.name}
                   </Link>
                 ))}
               </div>
@@ -50,28 +45,22 @@ export function Navbar() {
         </div>
 
         {/* Logo */}
-        <Link href="/">
-          <a className="font-display font-bold text-xl md:text-2xl tracking-tighter text-white mr-4 flex items-center gap-2">
+        <Link href="/" className="font-display font-bold text-xl md:text-2xl tracking-tighter text-white mr-4 flex items-center gap-2">
             <span className="text-white underline decoration-white underline-offset-4">SB</span>Services
-          </a>
         </Link>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-6">
           {navItems.map((item) => (
-            <Link key={item.path} href={item.path}>
-              <a
-                className={cn(
+            <Link key={item.path} href={item.path} className={cn(
                   "text-[10px] font-mono tracking-[0.2em] uppercase transition-all hover:text-white relative group",
                   location === item.path ? "text-white" : "text-zinc-500"
-                )}
-              >
+                )}>
                 {item.name}
                 <span className={cn(
                   "absolute -bottom-1 left-0 w-0 h-px bg-white transition-all duration-300 group-hover:w-full",
                   location === item.path ? "w-full" : ""
                 )} />
-              </a>
             </Link>
           ))}
         </div>
