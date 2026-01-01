@@ -1,8 +1,18 @@
 import { motion } from "framer-motion";
 import { Star, MessageSquare, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 export default function FeedbackPage() {
+  const { toast } = useToast();
+
+  const handleFeedback = () => {
+    toast({
+      title: "Feedback Submitted",
+      description: "Thank you for your feedback! It has been received.",
+    });
+  };
+
   const testimonials = [
     {
       user: "DragonSlayer99",
@@ -29,7 +39,10 @@ export default function FeedbackPage() {
       <div className="text-center space-y-4">
         <h1 className="text-4xl md:text-5xl font-display font-bold text-white">Customer Feedback</h1>
         <p className="text-muted-foreground text-lg">Hear what our community has to say about our services.</p>
-        <Button className="bg-primary hover:bg-primary/90 text-white btn-glow rounded-full px-8">
+        <Button 
+          onClick={handleFeedback}
+          className="bg-primary hover:bg-primary/90 text-white btn-glow rounded-full px-8"
+        >
           <MessageSquare className="mr-2 h-4 w-4" /> Leave Feedback
         </Button>
       </div>

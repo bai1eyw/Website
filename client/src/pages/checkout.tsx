@@ -7,10 +7,20 @@ import { CreditCard, Wallet } from "lucide-react";
 import { useState } from "react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
+import { useToast } from "@/hooks/use-toast";
 
 export default function CheckoutPage() {
-  const { items, total } = useCart();
+  const { items, total, clearCart } = useCart();
   const [paymentMethod, setPaymentMethod] = useState("card");
+  const { toast } = useToast();
+
+  const handleCheckout = () => {
+    toast({
+      title: "Order Placed",
+      description: "Your order has been placed successfully! Check your Discord for details.",
+    });
+    clearCart();
+  };
 
   if (items.length === 0) {
     return (
@@ -109,7 +119,10 @@ export default function CheckoutPage() {
             <span>${(total * 1.1).toFixed(2)}</span>
           </div>
           
-          <Button className="w-full h-14 text-lg bg-primary hover:bg-primary/90 text-white btn-glow rounded-xl">
+          <Button 
+            onClick={handleCheckout}
+            className="w-full h-14 text-lg bg-primary hover:bg-primary/90 text-white btn-glow rounded-xl"
+          >
             Pay ${(total * 1.1).toFixed(2)}
           </Button>
           <p className="text-xs text-center text-muted-foreground mt-4">
