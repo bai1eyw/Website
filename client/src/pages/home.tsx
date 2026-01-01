@@ -51,12 +51,12 @@ export default function Home() {
         >
           <Link href="/products">
             <Button size="lg" className="bg-zinc-100 hover:bg-white text-black font-bold text-sm px-8 h-12 rounded-none tracking-widest">
-              BROWSE_STORAGE <ArrowRight className="ml-2 h-4 w-4" />
+              BROWSE_PRODUCTS <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </Link>
           <Link href="/status">
             <Button size="lg" variant="outline" className="border-white/10 bg-transparent hover:bg-white/5 text-white text-sm px-8 h-12 rounded-none tracking-widest">
-              CHECK_INVENTORY
+              CHECK_STATUS
             </Button>
           </Link>
         </motion.div>
