@@ -7,37 +7,37 @@
   --font-sans: 'Outfit', sans-serif;
   --font-display: 'Space Grotesk', sans-serif;
 
-  --color-background: hsl(220 30% 2%);
-  --color-foreground: hsl(220 10% 90%);
+  --color-background: hsl(0 0% 0%);
+  --color-foreground: hsl(0 0% 100%);
   
-  --color-card: hsl(220 30% 4% / 0.9);
-  --color-card-foreground: hsl(220 10% 90%);
+  --color-card: hsl(0 0% 2% / 0.95);
+  --color-card-foreground: hsl(0 0% 100%);
   
-  --color-popover: hsl(220 30% 2%);
-  --color-popover-foreground: hsl(220 10% 90%);
+  --color-popover: hsl(0 0% 0%);
+  --color-popover-foreground: hsl(0 0% 100%);
   
-  --color-primary: hsl(210 100% 50%);
-  --color-primary-foreground: hsl(0 0% 98%);
+  --color-primary: hsl(0 0% 100%);
+  --color-primary-foreground: hsl(0 0% 0%);
   
-  --color-secondary: hsl(220 30% 10%);
-  --color-secondary-foreground: hsl(220 10% 90%);
+  --color-secondary: hsl(0 0% 5%);
+  --color-secondary-foreground: hsl(0 0% 100%);
   
-  --color-muted: hsl(220 30% 10%);
-  --color-muted-foreground: hsl(220 10% 50%);
+  --color-muted: hsl(0 0% 10%);
+  --color-muted-foreground: hsl(0 0% 60%);
   
-  --color-accent: hsl(210 100% 40%);
-  --color-accent-foreground: hsl(0 0% 98%);
+  --color-accent: hsl(0 0% 90%);
+  --color-accent-foreground: hsl(0 0% 0%);
   
-  --color-destructive: hsl(0 100% 30%);
-  --color-destructive-foreground: hsl(0 0% 98%);
+  --color-destructive: hsl(0 0% 20%);
+  --color-destructive-foreground: hsl(0 0% 100%);
   
-  --color-border: hsl(220 30% 12%);
-  --color-input: hsl(220 30% 12%);
-  --color-ring: hsl(210 100% 50%);
+  --color-border: hsl(0 0% 10%);
+  --color-input: hsl(0 0% 10%);
+  --color-ring: hsl(0 0% 100%);
 
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
 }
 
 @layer base {
@@ -45,7 +45,7 @@
     @apply border-border;
   }
   body {
-    @apply font-sans antialiased bg-background text-foreground selection:bg-blue-500/30 selection:text-white;
+    @apply font-sans antialiased bg-background text-foreground selection:bg-white selection:text-black;
     position: relative;
     overflow-x: hidden;
   }
@@ -53,7 +53,7 @@
 
 @layer utilities {
   .bg-animate-dull {
-    background: linear-gradient(-45deg, #02040a, #050a1f, #02040a, #010208);
+    background: linear-gradient(-45deg, #000000, #050505, #000000, #0a0a0a);
     background-size: 400% 400%;
     animation: gradient-dull 15s ease infinite;
   }
@@ -65,33 +65,30 @@
   }
 
   .glass {
-    @apply bg-blue-950/20 backdrop-blur-md border border-blue-500/10 shadow-lg;
+    @apply bg-black/40 backdrop-blur-md border border-white/5 shadow-lg;
   }
   
   .glass-card {
-    @apply bg-blue-950/30 backdrop-blur-xl border border-blue-500/10 shadow-xl transition-all duration-500;
+    @apply bg-zinc-950/80 backdrop-blur-xl border border-white/5 shadow-xl transition-all duration-300;
   }
   
   .glass-card:hover {
-    @apply border-blue-400/30 bg-blue-900/20 shadow-blue-500/10 shadow-2xl;
+    @apply border-white/20 bg-black shadow-white/5 shadow-2xl;
   }
 
   .text-glow {
-    text-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
   }
   
   .nav-pill {
-    @apply bg-blue-950/80 backdrop-blur-xl border border-blue-500/20 rounded-full px-6 py-2 shadow-2xl;
+    @apply bg-black backdrop-blur-xl border border-white/10 rounded-none px-6 py-2 shadow-2xl;
   }
 
   .btn-glow {
-    @apply relative overflow-hidden transition-all duration-500;
-    border: 1px solid rgba(59, 130, 246, 0.2);
+    @apply relative overflow-hidden transition-all duration-300 border border-white/10;
   }
   
   .btn-glow:hover {
-    background: rgba(59, 130, 246, 0.1);
-    border-color: rgba(59, 130, 246, 0.4);
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+    @apply bg-white text-black border-white shadow-[0_0_15px_rgba(255,255,255,0.2)];
   }
 }
