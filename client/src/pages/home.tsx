@@ -20,7 +20,7 @@ export default function Home() {
           className="relative inline-block"
         >
           <span className="relative px-4 py-1.5 rounded-full bg-zinc-900 border border-white/5 text-[10px] font-mono tracking-[0.2em] text-zinc-400 uppercase">
-            SB Services // V4.2
+            SB Services
           </span>
         </motion.div>
 
@@ -50,7 +50,7 @@ export default function Home() {
         >
           <Link href="/products">
             <Button size="lg" className="bg-white hover:bg-zinc-200 text-black font-bold text-sm px-8 h-12 rounded-none tracking-widest transition-all">
-              BRowse products <ArrowRight className="ml-2 h-4 w-4" />
+              Browse products <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </Link>
           <Link href="/status">
