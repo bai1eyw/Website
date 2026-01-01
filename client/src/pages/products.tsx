@@ -22,7 +22,7 @@ export default function ProductsPage() {
     <div className="space-y-12">
       <div className="flex flex-col md:flex-row gap-8 justify-between items-start md:items-center">
         <div>
-          <h1 className="text-4xl font-display font-bold text-white mb-2 uppercase tracking-tighter">Market_Storage</h1>
+          <h1 className="text-4xl font-display font-bold text-white mb-2 uppercase tracking-tighter">Market Stock</h1>
           <p className="text-zinc-500 text-sm font-light">Browse our services.</p>
         </div>
         
