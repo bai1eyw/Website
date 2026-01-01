@@ -20,7 +20,7 @@ export const PRODUCTS: Product[] = [
     category: "Donut",
     image: "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/ecdd28c1-58ae-46e1-e26e-8cafda67a700/public",
     features: ["Instant Delivery", "Secure Transaction", "1m In-game Money"],
-    stock: 142
+    stock: 50
   },
   {
     id: "d2",
@@ -31,7 +31,7 @@ export const PRODUCTS: Product[] = [
     category: "Donut",
     image: "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/1d51c0ff-d8d1-4c15-9d97-ff8b779ab400/public",
     features: ["Automatic Farm Compatible", "Infinite Skeletons"],
-    stock: 84
+    stock: 20
   },
   {
     id: "d3",
@@ -42,7 +42,7 @@ export const PRODUCTS: Product[] = [
     category: "Donut",
     image: "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/32c23974-8ae3-4008-174b-4c024a974c00/public",
     features: ["Infinite Flight", "Unbreaking III", "Mending"],
-    stock: 3
+    stock: 0
   },
   {
     id: "d4",
@@ -53,7 +53,7 @@ export const PRODUCTS: Product[] = [
     category: "Donut",
     image: "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/acfc0704-e07d-4ef2-9d5f-15e0183ce000/public",
     features: ["Pure Netherite", "Build Flex", "Highly Durable"],
-    stock: 11
+    stock: 0
   }
 ];
 
