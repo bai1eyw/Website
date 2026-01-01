@@ -7,17 +7,17 @@ export default function StatusPage() {
   return (
     <div className="max-w-3xl mx-auto space-y-12">
       <div className="text-center space-y-4">
-        <h1 className="text-4xl font-display font-bold text-white uppercase tracking-tighter">Inventory_Status</h1>
-        <p className="text-zinc-500 text-sm font-light">Real-time stock availability for all SB Services protocols.</p>
+        <h1 className="text-4xl font-display font-bold text-white uppercase tracking-tighter">Stock Status</h1>
+        <p className="text-zinc-500 text-sm font-light">Real time stock availability for all SB Services.</p>
       </div>
 
       <div className="glass-card p-8 rounded-none border border-white/5 space-y-6">
         <div className="flex items-center justify-between pb-6 border-b border-white/5">
           <div className="flex items-center gap-3">
             <div className="h-2 w-2 rounded-full bg-zinc-100 animate-pulse" />
-            <span className="text-sm font-mono tracking-widest text-white uppercase">Database_Active</span>
+            <span className="text-sm font-mono tracking-widest text-white uppercase">Stock Status</span>
           </div>
-          <span className="text-[10px] text-zinc-600 uppercase tracking-[0.2em] font-mono">Realtime // Sync</span>
+          <span className="text-[10px] text-zinc-600 uppercase tracking-[0.2em] font-mono">Live Status</span>
         </div>
 
         <div className="grid gap-4">
