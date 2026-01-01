@@ -20,7 +20,7 @@ export const PRODUCTS: Product[] = [
     category: "Donut",
     image: "https://images.unsplash.com/photo-1580519542036-c47de6196ba5?w=800&auto=format&fit=crop&q=60",
     features: ["Instant Delivery", "Secure Transaction", "1m In-game Money"],
-    stock: 3510
+    stock: 142
   },
   {
     id: "d2",
@@ -31,7 +31,7 @@ export const PRODUCTS: Product[] = [
     category: "Donut",
     image: "https://images.unsplash.com/photo-1621644340706-e17929424e8e?w=800&auto=format&fit=crop&q=60",
     features: ["Automatic Farm Compatible", "Infinite Skeletons", "Rare Item"],
-    stock: 3718
+    stock: 84
   },
   {
     id: "d3",
@@ -63,7 +63,7 @@ export const PRODUCTS: Product[] = [
     category: "Steal a Brainrot",
     image: "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?w=800&auto=format&fit=crop&q=60",
     features: ["Custom UI", "Low Latency", "Frequent Updates"],
-    stock: 5
+    stock: 24
   }
 ];
 
