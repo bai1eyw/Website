@@ -20,9 +20,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-zinc-500 font-mono tracking-widest">
           <p className="uppercase">&copy; 2026 SB Services // PROTOCOL_V4</p>
           <div className="flex gap-8">
-            <a href="#" className="hover:text-white transition-colors">SEC_TERMS</a>
-            <a href="#" className="hover:text-white transition-colors">PRIV_DATA</a>
-            <a href="#" className="hover:text-white transition-colors">ENCRYPT_CON</a>
+            <a href="#" className="hover:text-white transition-colors">TOS</a>
+            <a href="#" className="hover:text-white transition-colors">privacy and security</a>
+            <a href="#" className="hover:text-white transition-colors">SB Services</a>
           </div>
         </div>
       </footer>
