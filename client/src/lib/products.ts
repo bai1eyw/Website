@@ -18,7 +18,7 @@ export const PRODUCTS: Product[] = [
     price: 0.10,
     originalPrice: 0.05,
     category: "Donut",
-    image: "https://images.unsplash.com/photo-1580519542036-c47de6196ba5?w=800&auto=format&fit=crop&q=60",
+    image: "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/ecdd28c1-58ae-46e1-e26e-8cafda67a700/public",
     features: ["Instant Delivery", "Secure Transaction", "1m In-game Money"],
     stock: 142
   },
@@ -29,8 +29,8 @@ export const PRODUCTS: Product[] = [
     price: 0.12,
     originalPrice: 0.06,
     category: "Donut",
-    image: "https://images.unsplash.com/photo-1621644340706-e17929424e8e?w=800&auto=format&fit=crop&q=60",
-    features: ["Automatic Farm Compatible", "Infinite Skeletons", "Rare Item"],
+    image: "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/1d51c0ff-d8d1-4c15-9d97-ff8b779ab400/public",
+    features: ["Automatic Farm Compatible", "Infinite Skeletons"],
     stock: 84
   },
   {
@@ -40,7 +40,7 @@ export const PRODUCTS: Product[] = [
     price: 25.00,
     originalPrice: 95.00,
     category: "Donut",
-    image: "https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=800&auto=format&fit=crop&q=60",
+    image: "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/32c23974-8ae3-4008-174b-4c024a974c00/public",
     features: ["Infinite Flight", "Unbreaking III", "Mending"],
     stock: 3
   },
@@ -51,20 +51,10 @@ export const PRODUCTS: Product[] = [
     price: 8.50,
     originalPrice: 8.00,
     category: "Donut",
-    image: "https://images.unsplash.com/photo-1614726365930-627c75da663e?w=800&auto=format&fit=crop&q=60",
+    image: "https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/acfc0704-e07d-4ef2-9d5f-15e0183ce000/public",
     features: ["Pure Netherite", "Build Flex", "Highly Durable"],
     stock: 11
-  },
-  {
-    id: "b1",
-    name: "Brainrot Script V2",
-    description: "Advanced scripts for the ultimate brainrot experience. Custom UI included.",
-    price: 15.00,
-    category: "Steal a Brainrot",
-    image: "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?w=800&auto=format&fit=crop&q=60",
-    features: ["Custom UI", "Low Latency", "Frequent Updates"],
-    stock: 24
   }
 ];
 
-export const CATEGORIES = ["All", "Donut", "Steal a Brainrot"];
+export const CATEGORIES = ["All", "Donut"];
