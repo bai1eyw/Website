@@ -30,7 +30,7 @@ export default function Home() {
           transition={{ delay: 0.2 }}
           className="text-5xl md:text-7xl font-display font-bold tracking-tight text-white max-w-4xl"
         >
-          Your journy Starts<span className="text-white font-mono italic underline decoration-zinc-800 underline-offset-8">Here</span>
+          Your journy Starts <span className="text-white font-mono italic underline decoration-zinc-800 underline-offset-8">Here</span>
         </motion.h1>
 
         <motion.p
