@@ -8,7 +8,7 @@ interface CartItem extends Product {
 
 interface CartContextType {
   items: CartItem[];
-  addToCart: (product: Product) => void;
+  addToCart: (product: Product, quantity?: number) => void;
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
@@ -25,13 +25,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [products, setProducts] = useState<Product[]>(PRODUCTS);
   const { toast } = useToast();
 
-  const addToCart = (product: Product) => {
+  const addToCart = (product: Product, quantity: number = 1) => {
     // Check local stock state
     const currentProduct = products.find(p => p.id === product.id);
-    if (currentProduct && currentProduct.stock !== undefined && currentProduct.stock <= 0) {
+    if (currentProduct && currentProduct.stock !== undefined && currentProduct.stock < quantity) {
       toast({
-        title: "Out of Stock",
-        description: `${product.name} is currently unavailable.`,
+        title: "Insufficient Stock",
+        description: `Only ${currentProduct.stock} units of ${product.name} available.`,
         variant: "destructive"
       });
       return;
@@ -40,17 +40,26 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setItems(current => {
       const existing = current.find(item => item.id === product.id);
       if (existing) {
+        // Also check if existing + new exceeds stock
+        if (currentProduct && currentProduct.stock !== undefined && (existing.quantity + quantity) > currentProduct.stock) {
+          toast({
+            title: "Limited Stock",
+            description: `Cannot add more ${product.name} to cart. Stock limit reached.`,
+            variant: "destructive"
+          });
+          return current;
+        }
         return current.map(item => 
           item.id === product.id 
-            ? { ...item, quantity: item.quantity + 1 }
+            ? { ...item, quantity: item.quantity + quantity }
             : item
         );
       }
-      return [...current, { ...product, quantity: 1 }];
+      return [...current, { ...product, quantity }];
     });
     toast({
       title: "Added to cart",
-      description: `${product.name} has been added to your cart.`,
+      description: `${quantity}x ${product.name} added to your cart.`,
     });
   };
 
