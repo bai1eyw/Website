@@ -54,6 +54,15 @@ export const PRODUCTS: Product[] = [
     image: "https://images.unsplash.com/photo-1614726365930-627c75da663e?w=800&auto=format&fit=crop&q=60",
     features: ["Pure Netherite", "Build Flex", "Highly Durable"],
     stock: 11
+  },
+  {
+    id: "s1",
+    name: "Custom Scripting Service",
+    description: "Professional Luau/Python scripting for your specific needs. Fast turnaround.",
+    price: 49.99,
+    category: "Services",
+    image: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=800&auto=format&fit=crop&q=60",
+    features: ["Optimized Code", "Bug Fixes", "API Integration"]
   }
 ];
 
