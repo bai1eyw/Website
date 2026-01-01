@@ -62,7 +62,8 @@ export const PRODUCTS: Product[] = [
     price: 15.00,
     category: "Steal a Brainrot",
     image: "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?w=800&auto=format&fit=crop&q=60",
-    features: ["Custom UI", "Low Latency", "Frequent Updates"]
+    features: ["Custom UI", "Low Latency", "Frequent Updates"],
+    stock: 5
   }
 ];
 

@@ -43,7 +43,18 @@ export default function ProductDetailsPage() {
             {product.category}
           </span>
           <h1 className="text-4xl md:text-5xl font-display font-bold text-white mb-4">{product.name}</h1>
-          <p className="text-3xl font-mono text-primary font-bold">${product.price}</p>
+          <div className="flex items-center gap-4 mb-4">
+            <p className="text-3xl font-mono text-primary font-bold">€{product.price.toFixed(2)}</p>
+            {product.stock !== undefined && (
+              <span className={`px-3 py-1 rounded-full text-xs font-bold border ${
+                product.stock === 0 ? "text-red-500 border-red-500/20 bg-red-500/10" : 
+                product.stock < 10 ? "text-yellow-500 border-yellow-500/20 bg-yellow-500/10" : 
+                "text-green-500 border-green-500/20 bg-green-500/10"
+              }`}>
+                {product.stock} in stock
+              </span>
+            )}
+          </div>
         </div>
 
         <p className="text-lg text-muted-foreground leading-relaxed">
