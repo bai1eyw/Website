@@ -52,7 +52,7 @@ export function Navbar() {
         {/* Logo */}
         <Link href="/">
           <a className="font-display font-bold text-xl md:text-2xl tracking-tighter text-white mr-4 flex items-center gap-2">
-            <span className="text-primary text-glow">SB</span>Services
+            <span className="text-blue-500 text-glow">SB</span>Services
           </a>
         </Link>
 
@@ -62,13 +62,13 @@ export function Navbar() {
             <Link key={item.path} href={item.path}>
               <a
                 className={cn(
-                  "text-sm font-medium transition-all hover:text-primary relative group",
-                  location === item.path ? "text-primary text-glow" : "text-white/70"
+                  "text-sm font-medium transition-all hover:text-blue-400 relative group",
+                  location === item.path ? "text-blue-500 text-glow" : "text-white/70"
                 )}
               >
                 {item.name}
                 <span className={cn(
-                  "absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full",
+                  "absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full",
                   location === item.path ? "w-full" : ""
                 )} />
               </a>

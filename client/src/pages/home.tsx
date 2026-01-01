@@ -30,14 +30,14 @@ export default function Home() {
           transition={{ delay: 0.2 }}
           className="text-5xl md:text-7xl font-display font-bold tracking-tight text-white max-w-4xl"
         >
-          Elevate Your <span className="text-zinc-500 font-mono italic">Experience</span>
+          Elevate Your <span className="text-blue-500 font-mono italic text-glow">Experience</span>
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="text-lg md:text-xl text-zinc-500 max-w-2xl font-light tracking-wide"
+          className="text-lg md:text-xl text-blue-100/60 max-w-2xl font-light tracking-wide"
         >
           Premium digital assets and exclusive access protocols. 
           Verified. Secure. Instant.
@@ -50,12 +50,12 @@ export default function Home() {
           className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
         >
           <Link href="/products">
-            <Button size="lg" className="bg-zinc-100 hover:bg-white text-black font-bold text-sm px-8 h-12 rounded-none tracking-widest">
+            <Button size="lg" className="bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm px-8 h-12 rounded-none tracking-widest shadow-[0_0_20px_rgba(37,99,235,0.4)]">
               BROWSE_PRODUCTS <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </Link>
           <Link href="/status">
-            <Button size="lg" variant="outline" className="border-white/10 bg-transparent hover:bg-white/5 text-white text-sm px-8 h-12 rounded-none tracking-widest">
+            <Button size="lg" variant="outline" className="border-blue-500/30 bg-blue-950/20 hover:bg-blue-500/10 text-blue-400 text-sm px-8 h-12 rounded-none tracking-widest">
               CHECK_STATUS
             </Button>
           </Link>

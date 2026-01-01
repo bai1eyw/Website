@@ -5,10 +5,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen w-full relative overflow-x-hidden text-foreground bg-animate-dull">
       {/* Subtle texture/grid layer */}
-      <div className="fixed inset-0 z-0 opacity-[0.02] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
+      <div className="fixed inset-0 z-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] mix-blend-overlay" />
       
       {/* Muted Grain Overlay */}
-      <div className="fixed inset-0 z-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/pinstriped-suit.png')]" />
+      <div className="fixed inset-0 z-0 opacity-[0.05] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/pinstriped-suit.png')] mix-blend-soft-light" />
 
       <Navbar />
       
