@@ -23,13 +23,13 @@ export default function ProductsPage() {
       <div className="flex flex-col md:flex-row gap-8 justify-between items-start md:items-center">
         <div>
           <h1 className="text-4xl font-display font-bold text-white mb-2 uppercase tracking-tighter">Market_Storage</h1>
-          <p className="text-zinc-500 text-sm font-light">Browse available digital asset protocols.</p>
+          <p className="text-zinc-500 text-sm font-light">Browse our services.</p>
         </div>
         
         <div className="relative w-full md:w-72">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3 w-3 text-zinc-600" />
           <Input
-            placeholder="SEARCH_INDEX..."
+            placeholder="SEARCH INDEX..."
             className="pl-9 bg-zinc-950 border-white/5 text-xs text-white placeholder:text-zinc-700 font-mono rounded-none focus:border-white/20"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -64,7 +64,7 @@ export default function ProductsPage() {
         </div>
       ) : (
         <div className="text-center py-20 text-zinc-600 font-mono text-xs">
-          <p>NO_MATCHES_FOUND_IN_STORAGE.</p>
+          <p>No stock left.</p>
           <Button 
             variant="link" 
             onClick={() => { setActiveCategory("All"); setSearchQuery(""); }}
