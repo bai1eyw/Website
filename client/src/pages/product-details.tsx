@@ -64,7 +64,7 @@ export default function ProductDetailsPage() {
                 product.stock < 10 ? "text-zinc-500 border-zinc-500/50" : 
                 "text-zinc-300 border-white/10"
               }`}>
-                {product.stock} IN_STORAGE
+                {product.stock} Stock
               </span>
             )}
           </div>
@@ -75,7 +75,7 @@ export default function ProductDetailsPage() {
         </p>
 
         <div className="space-y-4">
-          <h3 className="font-mono text-zinc-600 uppercase tracking-[0.2em] text-[10px]">Protocol_Features</h3>
+          <h3 className="font-mono text-zinc-600 uppercase tracking-[0.2em] text-[10px]">Services</h3>
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {product.features.map((feature, i) => (
               <li key={i} className="flex items-center gap-3 text-xs text-zinc-400 font-mono uppercase tracking-tight">
@@ -119,16 +119,16 @@ export default function ProductDetailsPage() {
             disabled={product.stock === 0}
             className="flex-1 w-full sm:w-auto h-14 text-sm font-bold bg-white hover:bg-zinc-200 text-black rounded-none uppercase tracking-widest"
           >
-            <ShoppingCart className="mr-2 h-4 w-4" /> Add_To_Order
+            <ShoppingCart className="mr-2 h-4 w-4" /> Add to basket
           </Button>
         </div>
 
         <div className="flex gap-6 text-[10px] text-zinc-600 font-mono uppercase tracking-widest pt-4">
           <div className="flex items-center gap-2">
-            <Zap className="h-3 w-3" /> Auto_DL
+            <Zap className="h-3 w-3" /> Auto DL
           </div>
           <div className="flex items-center gap-2">
-            <ShieldCheck className="h-3 w-3" /> Secure_Protocol
+            <ShieldCheck className="h-3 w-3" /> Secure Protocol
           </div>
         </div>
       </motion.div>
