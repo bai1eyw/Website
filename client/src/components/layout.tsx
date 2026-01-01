@@ -3,12 +3,12 @@ import bgImage from "@assets/generated_images/dark_abstract_glossy_grid_backgrou
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen w-full relative overflow-x-hidden text-foreground bg-black">
-      {/* Subtle texture/grid layer instead of glossy image */}
-      <div className="fixed inset-0 z-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
+    <div className="min-h-screen w-full relative overflow-x-hidden text-foreground bg-animate-dull">
+      {/* Subtle texture/grid layer */}
+      <div className="fixed inset-0 z-0 opacity-[0.02] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
       
-      {/* Overlay Gradient for deep dull black effect */}
-      <div className="fixed inset-0 z-0 bg-gradient-to-b from-zinc-950 via-black to-black pointer-events-none" />
+      {/* Muted Grain Overlay */}
+      <div className="fixed inset-0 z-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/pinstriped-suit.png')]" />
 
       <Navbar />
       
@@ -16,13 +16,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {children}
       </main>
 
-      <footer className="relative z-10 border-t border-white/5 bg-zinc-950/50 backdrop-blur-md py-8">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
-          <p>&copy; 2024 SB Services. All rights reserved.</p>
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-primary transition-colors">Terms</a>
-            <a href="#" className="hover:text-primary transition-colors">Privacy</a>
-            <a href="#" className="hover:text-primary transition-colors">Contact</a>
+      <footer className="relative z-10 border-t border-white/5 bg-black/50 backdrop-blur-md py-12">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-zinc-500 font-mono tracking-widest">
+          <p className="uppercase">&copy; 2026 SB Services // PROTOCOL_V4</p>
+          <div className="flex gap-8">
+            <a href="#" className="hover:text-white transition-colors">SEC_TERMS</a>
+            <a href="#" className="hover:text-white transition-colors">PRIV_DATA</a>
+            <a href="#" className="hover:text-white transition-colors">ENCRYPT_CON</a>
           </div>
         </div>
       </footer>
