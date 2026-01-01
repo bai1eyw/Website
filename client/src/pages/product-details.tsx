@@ -8,11 +8,11 @@ import { motion } from "framer-motion";
 
 export default function ProductDetailsPage() {
   const [match, params] = useRoute("/products/:id");
-  const { addToCart } = useCart();
+  const { addToCart, products } = useCart();
   
   if (!match) return <NotFound />;
   
-  const product = PRODUCTS.find(p => p.id === params.id);
+  const product = products.find(p => p.id === params.id);
   if (!product) return <NotFound />;
 
   return (

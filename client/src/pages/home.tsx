@@ -2,11 +2,12 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { ArrowRight, Star, Shield, Zap } from "lucide-react";
-import { PRODUCTS } from "@/lib/products";
+import { useCart } from "@/lib/cart";
 import { ProductCard } from "@/components/product-card";
 
 export default function Home() {
-  const featuredProducts = PRODUCTS.slice(0, 3);
+  const { products } = useCart();
+  const featuredProducts = products.slice(0, 3);
 
   return (
     <div className="space-y-24">
@@ -18,9 +19,8 @@ export default function Home() {
           transition={{ duration: 0.5 }}
           className="relative inline-block"
         >
-          <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-primary to-purple-600 opacity-70 blur-xl animate-pulse" />
-          <span className="relative px-4 py-1.5 rounded-full bg-black/50 border border-white/10 text-sm font-medium text-white backdrop-blur-md">
-            The #1 Marketplace for Digital Assets
+          <span className="relative px-4 py-1.5 rounded-full bg-zinc-900 border border-white/5 text-[10px] font-mono tracking-[0.2em] text-zinc-400 uppercase">
+            SB_PROTOCOL // V4.2
           </span>
         </motion.div>
 
@@ -30,17 +30,17 @@ export default function Home() {
           transition={{ delay: 0.2 }}
           className="text-5xl md:text-7xl font-display font-bold tracking-tight text-white max-w-4xl"
         >
-          Elevate Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-400 text-glow">Gaming Experience</span>
+          Elevate Your <span className="text-zinc-500 font-mono italic">Experience</span>
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="text-lg md:text-xl text-muted-foreground max-w-2xl"
+          className="text-lg md:text-xl text-zinc-500 max-w-2xl font-light tracking-wide"
         >
-          Premium scripts, exclusive SMP access, and high-quality digital goods. 
-          Instant delivery. 24/7 Support. 100% Secure.
+          Premium digital assets and exclusive access protocols. 
+          Verified. Secure. Instant.
         </motion.p>
 
         <motion.div
@@ -50,13 +50,13 @@ export default function Home() {
           className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto"
         >
           <Link href="/products">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-white btn-glow text-lg px-8 h-14 rounded-full">
-              Browse Products <ArrowRight className="ml-2 h-5 w-5" />
+            <Button size="lg" className="bg-zinc-100 hover:bg-white text-black font-bold text-sm px-8 h-12 rounded-none tracking-widest">
+              BROWSE_STORAGE <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </Link>
           <Link href="/status">
-            <Button size="lg" variant="outline" className="border-white/20 bg-black/20 hover:bg-white/10 text-white backdrop-blur-md text-lg px-8 h-14 rounded-full">
-              Check Status
+            <Button size="lg" variant="outline" className="border-white/10 bg-transparent hover:bg-white/5 text-white text-sm px-8 h-12 rounded-none tracking-widest">
+              CHECK_INVENTORY
             </Button>
           </Link>
         </motion.div>
@@ -65,9 +65,9 @@ export default function Home() {
       {/* Features Grid */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {[
-          { icon: Zap, title: "Instant Delivery", desc: "Get your products immediately after purchase via email." },
-          { icon: Shield, title: "Secure Payments", desc: "Powered by Stripe and PayPal for 100% secure transactions." },
-          { icon: Star, title: "Premium Quality", desc: "All products are verified and tested by our expert team." },
+          { icon: Zap, title: "INSTANT_DL", desc: "Automated distribution protocol active." },
+          { icon: Shield, title: "SECURE_GATE", desc: "Encryption layer V4 enabled." },
+          { icon: Star, title: "PREMIUM_AUTH", desc: "All assets verified by system root." },
         ].map((feature, i) => (
           <motion.div
             key={i}
@@ -75,27 +75,27 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.1 }}
-            className="glass p-8 rounded-2xl border border-white/5 hover:border-primary/30 transition-colors"
+            className="glass p-8 border border-white/5 hover:border-white/10 transition-colors rounded-none"
           >
-            <div className="h-12 w-12 rounded-xl bg-primary/20 flex items-center justify-center text-primary mb-4">
-              <feature.icon className="h-6 w-6" />
+            <div className="h-10 w-10 bg-zinc-900 border border-white/5 flex items-center justify-center text-zinc-400 mb-6">
+              <feature.icon className="h-5 w-5" />
             </div>
-            <h3 className="text-xl font-bold text-white mb-2">{feature.title}</h3>
-            <p className="text-muted-foreground">{feature.desc}</p>
+            <h3 className="text-xs font-mono font-bold text-white mb-2 tracking-widest uppercase">{feature.title}</h3>
+            <p className="text-zinc-500 text-sm font-light leading-relaxed">{feature.desc}</p>
           </motion.div>
         ))}
       </section>
 
       {/* Featured Products */}
       <section>
-        <div className="flex justify-between items-end mb-8">
+        <div className="flex justify-between items-end mb-12">
           <div>
-            <h2 className="text-3xl font-display font-bold text-white mb-2">Featured Products</h2>
-            <p className="text-muted-foreground">Top rated items this week</p>
+            <h2 className="text-2xl font-display font-bold text-white mb-2 uppercase tracking-tighter">Featured_Assets</h2>
+            <div className="h-0.5 w-12 bg-white/10" />
           </div>
           <Link href="/products">
-            <Button variant="link" className="text-primary hover:text-primary/80">
-              View All <ArrowRight className="ml-2 h-4 w-4" />
+            <Button variant="link" className="text-zinc-400 hover:text-white text-xs font-mono uppercase tracking-widest">
+              VIEW_ALL_INDEX
             </Button>
           </Link>
         </div>

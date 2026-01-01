@@ -1,15 +1,17 @@
 import { useState } from "react";
-import { PRODUCTS, CATEGORIES } from "@/lib/products";
+import { useCart } from "@/lib/cart";
 import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
+import { CATEGORIES } from "@/lib/products";
 
 export default function ProductsPage() {
+  const { products } = useCart();
   const [activeCategory, setActiveCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredProducts = PRODUCTS.filter(product => {
+  const filteredProducts = products.filter(product => {
     const matchesCategory = activeCategory === "All" || product.category === activeCategory;
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           product.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -17,18 +19,18 @@ export default function ProductsPage() {
   });
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-12">
       <div className="flex flex-col md:flex-row gap-8 justify-between items-start md:items-center">
         <div>
-          <h1 className="text-4xl font-display font-bold text-white mb-2">Marketplace</h1>
-          <p className="text-muted-foreground">Browse our collection of premium digital assets.</p>
+          <h1 className="text-4xl font-display font-bold text-white mb-2 uppercase tracking-tighter">Market_Storage</h1>
+          <p className="text-zinc-500 text-sm font-light">Browse available digital asset protocols.</p>
         </div>
         
         <div className="relative w-full md:w-72">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3 w-3 text-zinc-600" />
           <Input
-            placeholder="Search products..."
-            className="pl-9 bg-black/20 border-white/10 text-white focus:border-primary/50 focus:ring-primary/20"
+            placeholder="SEARCH_INDEX..."
+            className="pl-9 bg-zinc-950 border-white/5 text-xs text-white placeholder:text-zinc-700 font-mono rounded-none focus:border-white/20"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -44,11 +46,11 @@ export default function ProductsPage() {
             onClick={() => setActiveCategory(category)}
             className={
               activeCategory === category 
-                ? "bg-primary hover:bg-primary/90 text-white border-none"
-                : "bg-transparent border-white/10 text-muted-foreground hover:text-white hover:bg-white/5"
+                ? "bg-white text-black hover:bg-zinc-200 border-none rounded-none text-[10px] font-mono tracking-widest h-8"
+                : "bg-transparent border-white/5 text-zinc-500 hover:text-white hover:bg-white/5 rounded-none text-[10px] font-mono tracking-widest h-8"
             }
           >
-            {category}
+            {category.toUpperCase()}
           </Button>
         ))}
       </div>
@@ -61,14 +63,14 @@ export default function ProductsPage() {
           ))}
         </div>
       ) : (
-        <div className="text-center py-20 text-muted-foreground">
-          <p className="text-xl">No products found matching your criteria.</p>
+        <div className="text-center py-20 text-zinc-600 font-mono text-xs">
+          <p>NO_MATCHES_FOUND_IN_STORAGE.</p>
           <Button 
             variant="link" 
             onClick={() => { setActiveCategory("All"); setSearchQuery(""); }}
-            className="text-primary mt-2"
+            className="text-white mt-4 underline decoration-zinc-800 hover:decoration-white transition-all underline-offset-4"
           >
-            Clear filters
+            RESET_FILTERS
           </Button>
         </div>
       )}

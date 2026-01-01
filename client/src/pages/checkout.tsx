@@ -10,16 +10,11 @@ import { motion } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
 
 export default function CheckoutPage() {
-  const { items, total, clearCart } = useCart();
+  const { items, total, purchase } = useCart();
   const [paymentMethod, setPaymentMethod] = useState("card");
-  const { toast } = useToast();
 
   const handleCheckout = () => {
-    toast({
-      title: "Order Placed",
-      description: "Your order has been placed successfully! Check your Discord for details.",
-    });
-    clearCart();
+    purchase();
   };
 
   if (items.length === 0) {
