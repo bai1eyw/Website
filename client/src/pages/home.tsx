@@ -20,7 +20,7 @@ export default function Home() {
           className="relative inline-block"
         >
           <span className="relative px-4 py-1.5 rounded-full bg-zinc-900 border border-white/5 text-[10px] font-mono tracking-[0.2em] text-zinc-400 uppercase">
-            SB_PROTOCOL // V4.2
+            SB Services // V4.2
           </span>
         </motion.div>
 
@@ -39,8 +39,7 @@ export default function Home() {
           transition={{ delay: 0.3 }}
           className="text-lg md:text-xl text-zinc-400 max-w-2xl font-light tracking-wide"
         >
-          Premium digital assets and exclusive access protocols. 
-          Verified. Secure. Instant.
+          Fast, Fair, Trustworthy
         </motion.p>
 
         <motion.div
@@ -51,12 +50,12 @@ export default function Home() {
         >
           <Link href="/products">
             <Button size="lg" className="bg-white hover:bg-zinc-200 text-black font-bold text-sm px-8 h-12 rounded-none tracking-widest transition-all">
-              BROWSE_PRODUCTS <ArrowRight className="ml-2 h-4 w-4" />
+              BRowse products <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </Link>
           <Link href="/status">
             <Button size="lg" variant="outline" className="border-white/10 bg-transparent hover:bg-white/5 text-white text-sm px-8 h-12 rounded-none tracking-widest transition-all">
-              CHECK_STATUS
+              Check status
             </Button>
           </Link>
         </motion.div>
@@ -65,9 +64,9 @@ export default function Home() {
       {/* Features Grid */}
       <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {[
-          { icon: Zap, title: "INSTANT_DL", desc: "Automated distribution protocol active." },
-          { icon: Shield, title: "SECURE_GATE", desc: "Encryption layer V4 enabled." },
-          { icon: Star, title: "PREMIUM_AUTH", desc: "All assets verified by system root." },
+          { icon: Zap, title: "Fast", desc: "Instant delivery." },
+          { icon: Shield, title: "Fair", desc: "Cheap prices to suit everyone." },
+          { icon: Star, title: "Trustworthy", desc: "Trusted by many people in the donutsmp commununity." },
         ].map((feature, i) => (
           <motion.div
             key={i}
@@ -95,7 +94,7 @@ export default function Home() {
           </div>
           <Link href="/products">
             <Button variant="link" className="text-zinc-400 hover:text-white text-xs font-mono uppercase tracking-widest">
-              VIEW_ALL_INDEX
+              View all
             </Button>
           </Link>
         </div>
