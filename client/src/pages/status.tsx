@@ -57,7 +57,7 @@ export default function StatusPage() {
                     "text-zinc-100 border-zinc-100/50 bg-black"
                   } rounded-none`}>
                     <span className="text-[9px] font-mono uppercase tracking-[0.2em]">
-                      {isOutOfStock ? "VOID" : isLowStock ? "WARN" : "OK"}
+                      {isOutOfStock ? "RESTOCK" : isLowStock ? "LOW" : "GOOD"}
                     </span>
                   </div>
                 </div>
@@ -69,7 +69,7 @@ export default function StatusPage() {
 
       <div className="glass p-6 rounded-none border-white/5 text-center">
         <p className="text-[10px] text-zinc-600 font-mono uppercase tracking-widest">
-          SYSTEM_AUTO_SYNC_ENABLED // <a href="#" className="text-white hover:underline transition-all underline-offset-4">LOGS</a>
+          Status live // <a href="#" className="text-white hover:underline transition-all underline-offset-4">LOGS</a>
         </p>
       </div>
     </div>
