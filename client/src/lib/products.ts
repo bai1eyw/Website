@@ -54,16 +54,7 @@ export const PRODUCTS: Product[] = [
     image: "https://images.unsplash.com/photo-1614726365930-627c75da663e?w=800&auto=format&fit=crop&q=60",
     features: ["Pure Netherite", "Build Flex", "Highly Durable"],
     stock: 11
-  },
-  {
-    id: "2",
-    name: "Brainrot Bundle",
-    description: "The ultimate collection of meme-tier assets and scripts for your next project.",
-    price: 29.99,
-    category: "Steal a Brainrot",
-    image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800&auto=format&fit=crop&q=60",
-    features: ["100+ Assets", "Exclusive Scripts", "Lifetime Updates", "Community Access"]
   }
 ];
 
-export const CATEGORIES = ["All", "Donut", "Steal a Brainrot", "Services"];
+export const CATEGORIES = ["All", "Donut", "Services"];
