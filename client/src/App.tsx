@@ -13,6 +13,8 @@ import ProductDetails from "@/pages/product-details";
 import Cart from "@/pages/cart";
 import Checkout from "@/pages/checkout";
 import Login from "@/pages/login";
+import Status from "@/pages/status";
+import Feedback from "@/pages/feedback";
 
 function Router() {
   return (
@@ -24,6 +26,8 @@ function Router() {
         <Route path="/cart" component={Cart} />
         <Route path="/login" component={Login} />
         <Route path="/checkout" component={Checkout} />
+        <Route path="/status" component={Status} />
+        <Route path="/feedback" component={Feedback} />
         <Route component={NotFound} />
       </Switch>
     </Layout>
