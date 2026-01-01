@@ -27,7 +27,7 @@ export default function LoginPage() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     toast({
       title: "Login Attempt",
-      description: "This is a mockup. No actual authentication is implemented.",
+      description: "Log in attempt.",
     });
   }
 
