@@ -89,7 +89,7 @@ export default function Home() {
       <section>
         <div className="flex justify-between items-end mb-12">
           <div>
-            <h2 className="text-2xl font-display font-bold text-white mb-2 uppercase tracking-tighter">Featured_Assets</h2>
+            <h2 className="text-2xl font-display font-bold text-white mb-2 uppercase tracking-tighter">Services</h2>
             <div className="h-0.5 w-12 bg-white/10" />
           </div>
           <Link href="/products">
