@@ -14,6 +14,19 @@ export async function registerRoutes(
     res.json(products);
   });
 
+  app.post("/api/orders", async (req, res) => {
+    try {
+      const order = await storage.createOrder({
+        userId: req.user?.id || null,
+        total: req.body.total.toString(),
+        status: "pending"
+      });
+      res.status(201).json(order);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to create order" });
+    }
+  });
+
   app.get("/api/feedback", async (_req, res) => {
     const feedback = await storage.getFeedback();
     res.json(feedback);

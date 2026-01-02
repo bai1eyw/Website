@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Product, PRODUCTS } from './products';
 import { useToast } from '@/hooks/use-toast';
 
@@ -24,6 +24,22 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [products, setProducts] = useState<Product[]>(PRODUCTS);
   const { toast } = useToast();
+
+    useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('/api/products');
+        if (response.ok) {
+          const data = await response.json();
+          setProducts(data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const addToCart = (product: Product, quantity: number = 1) => {
     // Check local stock state
@@ -90,24 +106,55 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const clearCart = () => setItems([]);
 
-  const purchase = () => {
-    // Update stock levels
-    setProducts(currentProducts => {
-      return currentProducts.map(p => {
-        const cartItem = items.find(item => item.id === p.id);
-        if (cartItem && p.stock !== undefined) {
-          return { ...p, stock: Math.max(0, p.stock - cartItem.quantity) };
-        }
-        return p;
+  const purchase = async () => {
+    try {
+      // Mock order data
+      const orderData = {
+        total: total,
+        status: "pending"
+      };
+
+      const response = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(orderData)
       });
-    });
-    
-    toast({
-      title: "Order Placed",
-      description: "Your order has been placed successfully! Check your Discord for details.",
-    });
-    
-    setItems([]);
+
+      if (!response.ok) {
+        throw new Error("Failed to create order");
+      }
+
+      // Update local products state from the server after purchase
+      const productsRes = await fetch("/api/products");
+      if (productsRes.ok) {
+        const updatedProducts = await productsRes.json();
+        setProducts(updatedProducts);
+      } else {
+        // Fallback: manually update stock if API fetch fails
+        setProducts(currentProducts => {
+          return currentProducts.map(p => {
+            const cartItem = items.find(item => item.id === p.id);
+            if (cartItem && p.stock !== undefined) {
+              return { ...p, stock: Math.max(0, p.stock - cartItem.quantity) };
+            }
+            return p;
+          });
+        });
+      }
+      
+      toast({
+        title: "Order Placed",
+        description: "Your order has been placed successfully! Check your Discord for details.",
+      });
+      
+      setItems([]);
+    } catch (error) {
+      toast({
+        title: "Order Failed",
+        description: "There was an error processing your order.",
+        variant: "destructive"
+      });
+    }
   };
 
   const total = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);

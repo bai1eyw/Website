@@ -52,7 +52,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getProducts(): Promise<Product[]> {
-    return await db.select().from(products);
+    return await db.select().from(products).orderBy(products.name);
   }
 
   async getProduct(id: string): Promise<Product | undefined> {
