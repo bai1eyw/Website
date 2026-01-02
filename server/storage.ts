@@ -7,16 +7,16 @@ import connectPg from "connect-pg-simple";
 const PostgresSessionStore = connectPg(session);
 
 export interface IStorage {
-  getUser(id: number): Promise<User | undefined>;
+  getUser(id: string): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   
   getProducts(): Promise<Product[]>;
-  getProduct(id: number): Promise<Product | undefined>;
+  getProduct(id: string): Promise<Product | undefined>;
   
   createOrder(order: InsertOrder): Promise<Order>;
-  getOrder(id: number): Promise<Order | undefined>;
-  updateOrder(id: number, status: string): Promise<Order>;
+  getOrder(id: string): Promise<Order | undefined>;
+  updateOrder(id: string, status: string): Promise<Order>;
   
   createFeedback(feedback: InsertFeedback): Promise<Feedback>;
   getFeedback(): Promise<Feedback[]>;
@@ -28,7 +28,7 @@ export class DatabaseStorage implements IStorage {
   sessionStore: session.Store;
 
   constructor() {
-    this.sessionStore = new PostgresSessionStore({
+    this.sessionStore = new (PostgresSessionStore as any)({
       conObject: {
         connectionString: process.env.DATABASE_URL,
       },
@@ -36,7 +36,7 @@ export class DatabaseStorage implements IStorage {
     });
   }
 
-  async getUser(id: number): Promise<User | undefined> {
+  async getUser(id: string): Promise<User | undefined> {
     const [user] = await db.select().from(users).where(eq(users.id, id));
     return user;
   }
@@ -55,7 +55,7 @@ export class DatabaseStorage implements IStorage {
     return await db.select().from(products);
   }
 
-  async getProduct(id: number): Promise<Product | undefined> {
+  async getProduct(id: string): Promise<Product | undefined> {
     const [product] = await db.select().from(products).where(eq(products.id, id));
     return product;
   }
@@ -65,12 +65,12 @@ export class DatabaseStorage implements IStorage {
     return order;
   }
 
-  async getOrder(id: number): Promise<Order | undefined> {
+  async getOrder(id: string): Promise<Order | undefined> {
     const [order] = await db.select().from(orders).where(eq(orders.id, id));
     return order;
   }
 
-  async updateOrder(id: number, status: string): Promise<Order> {
+  async updateOrder(id: string, status: string): Promise<Order> {
     const [order] = await db.update(orders).set({ status }).where(eq(orders.id, id)).returning();
     return order;
   }

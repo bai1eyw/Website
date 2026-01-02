@@ -1,3 +1,4 @@
+import { Link } from "wouter";
 import { Navbar } from "./navbar";
 import bgImage from "@assets/generated_images/dark_abstract_glossy_grid_background_with_neon_purple_accents.png";
 
@@ -20,8 +21,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-zinc-500 font-mono tracking-widest">
           <p className="uppercase">&copy; 2026 DonutSMP. All rights reserved. </p>
           <div className="flex gap-8">
-            <a href="#" className="hover:text-white transition-colors">TOS</a>
-            <a href="#" className="hover:text-white transition-colors">privacy and security</a>
+            <Link href="/tos" className="hover:text-white transition-colors">TOS</Link>
+            <Link href="/privacy" className="hover:text-white transition-colors">PRIVACY AND SECURITY</Link>
             <a href="#" className="hover:text-white transition-colors">SB Services</a>
           </div>
         </div>

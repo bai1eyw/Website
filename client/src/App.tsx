@@ -15,6 +15,8 @@ import Checkout from "@/pages/checkout";
 import Login from "@/pages/login";
 import Status from "@/pages/status";
 import Feedback from "@/pages/feedback";
+import TOS from "@/pages/tos";
+import Privacy from "@/pages/privacy";
 
 function Router() {
   return (
@@ -28,6 +30,8 @@ function Router() {
         <Route path="/checkout" component={Checkout} />
         <Route path="/status" component={Status} />
         <Route path="/feedback" component={Feedback} />
+        <Route path="/tos" component={TOS} />
+        <Route path="/privacy" component={Privacy} />
         <Route component={NotFound} />
       </Switch>
     </Layout>

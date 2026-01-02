@@ -6,29 +6,51 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useToast } from "@/hooks/use-toast";
-import { User, Lock } from "lucide-react";
+import { User, Lock, LogIn, UserPlus } from "lucide-react";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { useLocation } from "wouter";
+import { apiRequest, queryClient } from "@/lib/queryClient";
 
 const formSchema = z.object({
-  email: z.string().email(),
+  username: z.string().min(3),
   password: z.string().min(6),
 });
 
 export default function LoginPage() {
   const { toast } = useToast();
+  const [, setLocation] = useLocation();
+  const [isLogin, setIsLogin] = useState(true);
+  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
+      username: "",
       password: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    toast({
-      title: "Login Attempt",
-      description: "Log in attempt.",
-    });
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const endpoint = isLogin ? "/api/login" : "/api/register";
+      const res = await apiRequest("POST", endpoint, values);
+      const user = await res.json();
+      
+      queryClient.setQueryData(["/api/user"], user);
+      
+      toast({
+        title: isLogin ? "Welcome Back" : "Account Created",
+        description: isLogin ? `Logged in as ${user.username}` : "Your account has been successfully created.",
+      });
+      
+      setLocation("/");
+    } catch (error: any) {
+      toast({
+        variant: "destructive",
+        title: "Authentication Failed",
+        description: error.message,
+      });
+    }
   }
 
   return (
@@ -40,22 +62,26 @@ export default function LoginPage() {
       >
         <Card className="glass-card border-white/10 bg-black/40">
           <CardHeader className="text-center space-y-2 pb-6">
-            <CardTitle className="text-3xl font-display font-bold text-white">Welcome Back</CardTitle>
-            <CardDescription className="text-muted-foreground">Sign in to your account</CardDescription>
+            <CardTitle className="text-3xl font-display font-bold text-white">
+              {isLogin ? "Welcome Back" : "Create Account"}
+            </CardTitle>
+            <CardDescription className="text-muted-foreground">
+              {isLogin ? "Sign in to your account" : "Join SB Services today"}
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 <FormField
                   control={form.control}
-                  name="email"
+                  name="username"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-white">Email</FormLabel>
+                      <FormLabel className="text-white">Username</FormLabel>
                       <FormControl>
                         <div className="relative">
                           <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                          <Input className="pl-10 bg-black/20 border-white/10 text-white" placeholder="you@example.com" {...field} />
+                          <Input className="pl-10 bg-black/20 border-white/10 text-white" placeholder="Minecraft username" {...field} />
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -78,14 +104,20 @@ export default function LoginPage() {
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-white btn-glow">
-                  Sign In
+                <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-white btn-glow h-12">
+                  {isLogin ? <><LogIn className="mr-2 h-4 w-4" /> Sign In</> : <><UserPlus className="mr-2 h-4 w-4" /> Create Account</>}
                 </Button>
               </form>
             </Form>
             
             <div className="mt-6 text-center text-sm text-muted-foreground">
-              Don't have an account? <a href="#" className="text-primary hover:underline">Sign up</a>
+              {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
+              <button 
+                onClick={() => setIsLogin(!isLogin)} 
+                className="text-primary hover:underline font-bold"
+              >
+                {isLogin ? "Sign up" : "Log in"}
+              </button>
             </div>
           </CardContent>
         </Card>
