@@ -1,121 +1,142 @@
-import React, { createContext, useContext, useState } from 'react';
-import { Product, PRODUCTS } from './products';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { apiRequest } from './queryClient';
+import { Product, Order } from '@shared/schema';
 
-interface CartItem extends Product {
+interface CartItem {
+  product: Product;
   quantity: number;
 }
 
 interface CartContextType {
-  items: CartItem[];
+  cart: CartItem[];
   addToCart: (product: Product, quantity?: number) => void;
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
-  purchase: () => void;
+  purchase: () => Promise<void>;
   total: number;
   itemCount: number;
   products: Product[];
+  isLoading: boolean;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>([]);
-  const [products, setProducts] = useState<Product[]>(PRODUCTS);
+  const [cart, setCart] = useState<CartItem[]>([]);
   const { toast } = useToast();
+  const queryClient = useQueryClient();
+
+  const { data: products = [], isLoading } = useQuery<Product[]>({
+    queryKey: ["/api/products"],
+  });
+
+  const orderMutation = useMutation({
+    mutationFn: async (orderData: any) => {
+      const res = await apiRequest("POST", "/api/orders", orderData);
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/products"] });
+      clearCart();
+      toast({
+        title: "Order Placed",
+        description: "Your order has been sent for manual verification and stock updated.",
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        variant: "destructive",
+        title: "Order Failed",
+        description: error.message,
+      });
+    }
+  });
 
   const addToCart = (product: Product, quantity: number = 1) => {
-    // Check local stock state
-    const currentProduct = products.find(p => p.id === product.id);
-    if (currentProduct && currentProduct.stock !== undefined && currentProduct.stock < quantity) {
-      toast({
-        title: "Insufficient Stock",
-        description: `Only ${currentProduct.stock} units of ${product.name} available.`,
-        variant: "destructive"
-      });
-      return;
-    }
+    const liveProduct = products.find(p => p.id === product.id);
+    const availableStock = liveProduct?.stock ?? 0;
 
-    setItems(current => {
-      const existing = current.find(item => item.id === product.id);
+    setCart(current => {
+      const existing = current.find(item => item.product.id === product.id);
+      const currentQtyInCart = existing?.quantity ?? 0;
+      
+      if (currentQtyInCart + quantity > availableStock) {
+        toast({
+          title: "Limited Stock",
+          description: `Only ${availableStock} units available in total.`,
+          variant: "destructive"
+        });
+        return current;
+      }
+
       if (existing) {
-        // Also check if existing + new exceeds stock
-        if (currentProduct && currentProduct.stock !== undefined && (existing.quantity + quantity) > currentProduct.stock) {
-          toast({
-            title: "Limited Stock",
-            description: `Cannot add more ${product.name} to cart. Stock limit reached.`,
-            variant: "destructive"
-          });
-          return current;
-        }
         return current.map(item => 
-          item.id === product.id 
+          item.product.id === product.id 
             ? { ...item, quantity: item.quantity + quantity }
             : item
         );
       }
-      return [...current, { ...product, quantity }];
+      return [...current, { product, quantity }];
     });
+
     toast({
       title: "Added to cart",
-      description: `${quantity}x ${product.name} added to your cart.`,
+      description: `${quantity}x ${product.name} added to your basket.`,
     });
   };
 
   const removeFromCart = (productId: string) => {
-    setItems(current => current.filter(item => item.id !== productId));
+    setCart(current => current.filter(item => item.product.id !== productId));
   };
 
   const updateQuantity = (productId: string, quantity: number) => {
     if (quantity < 1) return;
     
-    // Check stock
-    const product = products.find(p => p.id === productId);
-    if (product && product.stock !== undefined && quantity > product.stock) {
+    const liveProduct = products.find(p => p.id === productId);
+    const availableStock = liveProduct?.stock ?? 0;
+
+    if (quantity > availableStock) {
       toast({
         title: "Limited Stock",
-        description: `Only ${product.stock} units available.`,
+        description: `Only ${availableStock} units available.`,
         variant: "destructive"
       });
       return;
     }
 
-    setItems(current =>
+    setCart(current =>
       current.map(item =>
-        item.id === productId ? { ...item, quantity } : item
+        item.product.id === productId ? { ...item, quantity } : item
       )
     );
   };
 
-  const clearCart = () => setItems([]);
+  const clearCart = () => setCart([]);
 
-  const purchase = () => {
-    // Update stock levels
-    setProducts(currentProducts => {
-      return currentProducts.map(p => {
-        const cartItem = items.find(item => item.id === p.id);
-        if (cartItem && p.stock !== undefined) {
-          return { ...p, stock: Math.max(0, p.stock - cartItem.quantity) };
-        }
-        return p;
-      });
-    });
+  const purchase = async () => {
+    if (cart.length === 0) return;
     
-    toast({
-      title: "Order Placed",
-      description: "Your order has been placed successfully! Check your Discord for details.",
-    });
+    const orderTotal = cart.reduce((sum, item) => sum + (Number(item.product.price) * item.quantity), 0);
     
-    setItems([]);
+    await orderMutation.mutateAsync({
+      total: orderTotal,
+      items: cart.map(item => ({
+        productId: item.product.id,
+        quantity: item.quantity,
+        price: item.product.price
+      }))
+    });
   };
 
-  const total = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
+  const total = cart.reduce((sum, item) => sum + (Number(item.product.price) * item.quantity), 0);
+  const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <CartContext.Provider value={{ 
-      items, 
+      cart, 
       addToCart, 
       removeFromCart, 
       updateQuantity, 
@@ -123,7 +144,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       purchase,
       total, 
       itemCount,
-      products
+      products,
+      isLoading
     }}>
       {children}
     </CartContext.Provider>

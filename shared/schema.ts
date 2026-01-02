@@ -18,6 +18,15 @@ export const products = pgTable("products", {
   category: text("category").notNull(),
   stock: integer("stock").notNull().default(0),
   isLive: boolean("is_live").notNull().default(true),
+  features: text("features").array(),
+});
+
+export const orderItems = pgTable("order_items", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  orderId: varchar("order_id").references(() => orders.id),
+  productId: varchar("product_id").references(() => products.id),
+  quantity: integer("quantity").notNull(),
+  price: decimal("price", { precision: 10, scale: 2 }).notNull(),
 });
 
 export const orders = pgTable("orders", {

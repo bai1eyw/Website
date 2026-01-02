@@ -1,4 +1,4 @@
-import { Product } from "@/lib/products";
+import { Product } from "@shared/schema";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -48,13 +48,8 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
         <div className="flex items-end justify-between mb-4">
           <div className="flex flex-col">
             <span className="text-xl font-bold text-white">
-              €{product.price.toFixed(2)}
+              €{Number(product.price).toFixed(2)}
             </span>
-            {product.originalPrice && (
-              <span className="text-xs text-muted-foreground line-through">
-                €{product.originalPrice.toFixed(2)}
-              </span>
-            )}
           </div>
         </div>
 
