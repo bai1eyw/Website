@@ -66,7 +66,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
           </Link>
           <Button 
             onClick={() => addToCart(product)}
-            className="bg-primary hover:bg-primary/90 text-white border-none h-9 w-9 p-0 rounded-lg shadow-lg shadow-primary/20"
+            className="bg-primary hover:bg-primary/90 text-white border-none h-9 w-9 p-0 rounded-lg shadow-lg shadow-primary/20 flex items-center justify-center"
           >
             <ShoppingCart className="h-4 w-4" />
           </Button>
