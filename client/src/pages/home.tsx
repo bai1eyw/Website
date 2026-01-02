@@ -55,7 +55,7 @@ export default function Home() {
           </Link>
           <Link href="/status">
             <Button size="lg" variant="outline" className="border-white/10 bg-transparent hover:bg-white/5 text-white text-sm px-8 h-12 rounded-none tracking-widest transition-all">
-              Check status
+              <Zap className="mr-2 h-4 w-4 text-primary" /> Check status
             </Button>
           </Link>
         </motion.div>

@@ -61,7 +61,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
         <div className="flex gap-2">
           <Link href={`/products/${product.id}`} className="flex-1">
             <Button variant="outline" className="w-full h-9 text-xs border-white/10 hover:bg-white/5 hover:text-white text-white/80 rounded-lg">
-              Details
+              <ArrowRight className="mr-2 h-3 w-3" /> Details
             </Button>
           </Link>
           <Button 

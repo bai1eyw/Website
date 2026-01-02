@@ -3,7 +3,7 @@ import { useCart } from "@/lib/cart";
 import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { Search, Tag, RotateCcw } from "lucide-react";
 import { CATEGORIES } from "@/lib/products";
 
 export default function ProductsPage() {
@@ -50,7 +50,7 @@ export default function ProductsPage() {
                 : "bg-transparent border-white/5 text-zinc-500 hover:text-white hover:bg-white/5 rounded-none text-[10px] font-mono tracking-widest h-8"
             }
           >
-            {category.toUpperCase()}
+            <Tag className="mr-1.5 h-3 w-3" /> {category.toUpperCase()}
           </Button>
         ))}
       </div>
@@ -70,7 +70,7 @@ export default function ProductsPage() {
             onClick={() => { setActiveCategory("All"); setSearchQuery(""); }}
             className="text-white mt-4 underline decoration-zinc-800 hover:decoration-white transition-all underline-offset-4"
           >
-            RESET_FILTERS
+            <RotateCcw className="mr-2 h-3 w-3" /> RESET_FILTERS
           </Button>
         </div>
       )}

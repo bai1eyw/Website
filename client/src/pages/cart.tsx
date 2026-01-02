@@ -1,6 +1,6 @@
 import { useCart } from "@/lib/cart";
 import { Button } from "@/components/ui/button";
-import { Trash2, Plus, Minus, CreditCard } from "lucide-react";
+import { Trash2, Plus, Minus, CreditCard, ShoppingBag } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -14,7 +14,9 @@ export default function CartPage() {
         <h2 className="text-3xl font-display font-bold text-white">Your cart is empty</h2>
         <p className="text-muted-foreground">Looks like you haven't added anything yet.</p>
         <Link href="/products">
-          <Button className="bg-primary text-white">Continue Shopping</Button>
+          <Button className="bg-primary text-white">
+            <ShoppingBag className="mr-2 h-4 w-4" /> Continue Shopping
+          </Button>
         </Link>
       </div>
     );
@@ -95,7 +97,7 @@ export default function CartPage() {
           className="w-full h-12 bg-primary hover:bg-primary/90 text-white btn-glow text-lg font-bold"
           onClick={() => setLocation("/checkout")}
         >
-          Proceed to Checkout
+          <CreditCard className="mr-2 h-5 w-5" /> Proceed to Checkout
         </Button>
         
         <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
