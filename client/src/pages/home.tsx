@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { ArrowRight, Star, Shield, Zap } from "lucide-react";
+import { ArrowRight, Star, Shield, Zap, ShoppingBag } from "lucide-react";
 import { useCart } from "@/lib/cart";
 import { ProductCard } from "@/components/product-card";
 
@@ -50,7 +50,7 @@ export default function Home() {
         >
           <Link href="/products">
             <Button size="lg" className="bg-white hover:bg-zinc-200 text-black font-bold text-sm px-8 h-12 rounded-none tracking-widest transition-all">
-              Browse products <ArrowRight className="ml-2 h-4 w-4" />
+              <ShoppingBag className="mr-2 h-4 w-4" /> Browse products <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </Link>
           <Link href="/status">

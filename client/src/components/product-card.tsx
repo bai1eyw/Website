@@ -2,7 +2,7 @@ import { Product } from "@/lib/products";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ShoppingCart, ArrowRight, Tag } from "lucide-react";
+import { ShoppingCart, ArrowRight, Tag, Box } from "lucide-react";
 import { useCart } from "@/lib/cart";
 
 export function ProductCard({ product, index = 0 }: { product: Product; index?: number }) {
@@ -66,9 +66,9 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
           </Link>
           <Button 
             onClick={() => addToCart(product)}
-            className="bg-primary hover:bg-primary/90 text-white border-none h-9 w-9 p-0 rounded-lg shadow-lg shadow-primary/20 flex items-center justify-center"
+            className="bg-primary hover:bg-primary/90 text-white border-none h-9 w-9 p-0 rounded-lg shadow-lg shadow-primary/20 flex items-center justify-center overflow-visible"
           >
-            <ShoppingCart className="h-4 w-4" />
+            <ShoppingCart className="h-4 w-4 relative z-10" />
           </Button>
         </div>
       </div>

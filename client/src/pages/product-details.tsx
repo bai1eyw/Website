@@ -117,9 +117,9 @@ export default function ProductDetailsPage() {
             size="lg" 
             onClick={() => addToCart(product, quantity)}
             disabled={product.stock === 0}
-            className="flex-1 w-full sm:w-auto h-14 text-sm font-bold bg-white hover:bg-zinc-200 text-black rounded-none uppercase tracking-widest"
+            className="flex-1 w-full sm:w-auto h-14 text-sm font-bold bg-white hover:bg-zinc-200 text-black rounded-none uppercase tracking-widest flex items-center justify-center gap-2"
           >
-            <ShoppingCart className="mr-2 h-4 w-4" /> Add to basket
+            <ShoppingCart className="h-5 w-5" /> Add to basket
           </Button>
         </div>
 
