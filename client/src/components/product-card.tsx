@@ -1,4 +1,4 @@
-import { Product } from "@shared/schema";
+import { Product } from "@/lib/products";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -48,8 +48,13 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
         <div className="flex items-end justify-between mb-4">
           <div className="flex flex-col">
             <span className="text-xl font-bold text-white">
-              €{Number(product.price).toFixed(2)}
+              €{product.price.toFixed(2)}
             </span>
+            {product.originalPrice && (
+              <span className="text-xs text-muted-foreground line-through">
+                €{product.originalPrice.toFixed(2)}
+              </span>
+            )}
           </div>
         </div>
 
@@ -61,8 +66,7 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
           </Link>
           <Button 
             onClick={() => addToCart(product)}
-            disabled={product.stock !== undefined && product.stock <= 0}
-            className="bg-primary hover:bg-primary/90 disabled:bg-zinc-800 disabled:text-zinc-500 text-white border-none h-9 w-9 p-0 rounded-lg shadow-lg shadow-primary/20 flex items-center justify-center overflow-visible"
+            className="bg-primary hover:bg-primary/90 text-white border-none h-9 w-9 p-0 rounded-lg shadow-lg shadow-primary/20 flex items-center justify-center overflow-visible"
           >
             <ShoppingCart className="h-4 w-4 relative z-10 text-black" />
           </Button>

@@ -14,9 +14,7 @@ export interface IStorage {
   getProducts(): Promise<Product[]>;
   getProduct(id: string): Promise<Product | undefined>;
   
-  createOrder(order: InsertOrder, items: {productId: string, quantity: number, price: string}[]): Promise<Order>;
-  updateProductStock(id: string, newStock: number): Promise<void>;
-  seedProducts(products: InsertProduct[]): Promise<void>;
+  createOrder(order: InsertOrder): Promise<Order>;
   getOrder(id: string): Promise<Order | undefined>;
   updateOrder(id: string, status: string): Promise<Order>;
   
@@ -62,38 +60,9 @@ export class DatabaseStorage implements IStorage {
     return product;
   }
 
-  async createOrder(insertOrder: InsertOrder, items: {productId: string, quantity: number, price: string}[]): Promise<Order> {
+  async createOrder(insertOrder: InsertOrder): Promise<Order> {
     const [order] = await db.insert(orders).values(insertOrder).returning();
-    
-    for (const item of items) {
-      await db.insert(orderItems).values({
-        orderId: order.id,
-        productId: item.productId,
-        quantity: item.quantity,
-        price: item.price
-      });
-      
-      const product = await this.getProduct(item.productId);
-      if (product && product.stock !== undefined) {
-        const newStock = Math.max(0, product.stock - item.quantity);
-        await this.updateProductStock(item.productId, newStock);
-      }
-    }
-    
     return order;
-  }
-
-  async updateProductStock(id: string, stock: number): Promise<void> {
-    await db.update(products).set({ stock }).where(eq(products.id, id));
-  }
-
-  async seedProducts(insertProducts: InsertProduct[]): Promise<void> {
-    const existing = await this.getProducts();
-    if (existing.length === 0) {
-      for (const p of insertProducts) {
-        await db.insert(products).values(p);
-      }
-    }
   }
 
   async getOrder(id: string): Promise<Order | undefined> {

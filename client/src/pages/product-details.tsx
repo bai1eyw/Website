@@ -57,7 +57,7 @@ export default function ProductDetailsPage() {
           </span>
           <h1 className="text-4xl md:text-5xl font-display font-bold text-white mb-4 uppercase tracking-tighter">{product.name}</h1>
           <div className="flex items-center gap-4 mb-4">
-            <p className="text-3xl font-mono text-white font-bold">€{Number(product.price).toFixed(2)}</p>
+            <p className="text-3xl font-mono text-white font-bold">€{product.price.toFixed(2)}</p>
             {product.stock !== undefined && (
               <span className={`px-3 py-1 rounded-none text-[10px] font-mono tracking-widest border ${
                 product.stock === 0 ? "text-zinc-800 border-zinc-800/50" : 
@@ -77,7 +77,7 @@ export default function ProductDetailsPage() {
         <div className="space-y-4">
           <h3 className="font-mono text-zinc-600 uppercase tracking-[0.2em] text-[10px]">Services</h3>
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {product.features?.map((feature, i) => (
+            {product.features.map((feature, i) => (
               <li key={i} className="flex items-center gap-3 text-xs text-zinc-400 font-mono uppercase tracking-tight">
                 <div className="h-4 w-4 rounded-none bg-zinc-900 border border-white/5 flex items-center justify-center text-zinc-500 shrink-0">
                   <Check className="h-2 w-2" />
