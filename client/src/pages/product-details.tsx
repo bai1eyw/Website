@@ -57,7 +57,7 @@ export default function ProductDetailsPage() {
           </span>
           <h1 className="text-4xl md:text-5xl font-display font-bold text-white mb-4 uppercase tracking-tighter">{product.name}</h1>
           <div className="flex items-center gap-4 mb-4">
-            <p className="text-3xl font-mono text-white font-bold">€{Number(product.price).toFixed(2)}</p>
+            <p className="text-3xl font-mono text-white font-bold">€{product.price.toFixed(2)}</p>
             {product.stock !== undefined && (
               <span className={`px-3 py-1 rounded-none text-[10px] font-mono tracking-widest border ${
                 product.stock === 0 ? "text-zinc-800 border-zinc-800/50" : 

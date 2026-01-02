@@ -53,7 +53,7 @@ export default function StatusPage() {
                   <div className="hidden sm:flex flex-col items-end">
                     <span className="text-[8px] text-zinc-700 uppercase font-bold tracking-[0.2em] font-mono">Stock_Level</span>
                     <span className={`text-xs font-mono ${isOutOfStock ? 'text-red-500' : isLowStock ? 'text-yellow-500' : 'text-green-500'}`}>
-                      {product.stock !== undefined ? Number(product.stock).toLocaleString() : "UNLIMITED"}
+                      {product.stock !== undefined ? product.stock.toLocaleString() : "UNLIMITED"}
                     </span>
                   </div>
                   
