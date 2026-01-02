@@ -94,7 +94,7 @@ export default function CartPage() {
         </div>
 
         <Button 
-          className="w-full h-12 bg-primary hover:bg-primary/90 text-white btn-glow text-lg font-bold group"
+          className="w-full h-12 bg-primary hover:bg-primary/90 text-black btn-glow text-lg font-bold group"
           onClick={() => setLocation("/checkout")}
         >
           <CreditCard className="mr-2 h-5 w-5 text-black" /> Proceed to Checkout
