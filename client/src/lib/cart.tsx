@@ -59,6 +59,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     const liveProduct = products.find(p => p.id === product.id);
     const availableStock = liveProduct?.stock ?? 0;
 
+    if (availableStock <= 0) {
+      toast({
+        title: "Out of Stock",
+        description: `${product.name} is currently out of stock.`,
+        variant: "destructive"
+      });
+      return;
+    }
+
     setCart(current => {
       const existing = current.find(item => item.product.id === product.id);
       const currentQtyInCart = existing?.quantity ?? 0;
