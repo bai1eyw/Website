@@ -14,20 +14,6 @@ export async function registerRoutes(
     res.json(products);
   });
 
-  app.post("/api/products/purchase", async (req, res) => {
-    const { items } = req.body;
-    if (!Array.isArray(items)) return res.status(400).send("Invalid items");
-
-    try {
-      const results = await Promise.all(
-        items.map(item => storage.updateProductStock(item.id, item.quantity))
-      );
-      res.json(results);
-    } catch (error: any) {
-      res.status(400).send(error.message);
-    }
-  });
-
   app.get("/api/feedback", async (_req, res) => {
     const feedback = await storage.getFeedback();
     res.json(feedback);

@@ -21,8 +21,6 @@ export interface IStorage {
   createFeedback(feedback: InsertFeedback): Promise<Feedback>;
   getFeedback(): Promise<Feedback[]>;
   
-  updateProductStock(id: string, quantity: number): Promise<Product>;
-  
   sessionStore: session.Store;
 }
 
@@ -60,18 +58,6 @@ export class DatabaseStorage implements IStorage {
   async getProduct(id: string): Promise<Product | undefined> {
     const [product] = await db.select().from(products).where(eq(products.id, id));
     return product;
-  }
-
-  async updateProductStock(id: string, quantity: number): Promise<Product> {
-    const [product] = await db.select().from(products).where(eq(products.id, id));
-    if (!product) throw new Error("Product not found");
-    
-    const newStock = Math.max(0, (product.stock || 0) - quantity);
-    const [updated] = await db.update(products)
-      .set({ stock: newStock })
-      .where(eq(products.id, id))
-      .returning();
-    return updated;
   }
 
   async createOrder(insertOrder: InsertOrder): Promise<Order> {

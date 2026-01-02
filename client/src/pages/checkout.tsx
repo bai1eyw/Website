@@ -10,7 +10,7 @@ import { motion } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
 
 export default function CheckoutPage() {
-  const { items, total, purchase, isPurchasing } = useCart();
+  const { items, total, purchase } = useCart();
   const [paymentMethod, setPaymentMethod] = useState("card");
 
   const handleCheckout = () => {
@@ -116,10 +116,9 @@ export default function CheckoutPage() {
           
           <Button 
             onClick={handleCheckout}
-            disabled={isPurchasing}
-            className="w-full h-14 text-lg bg-primary hover:bg-primary/90 text-black btn-glow rounded-xl"
+            className="w-full h-14 text-lg bg-primary hover:bg-primary/90 text-white btn-glow rounded-xl"
           >
-            {isPurchasing ? "Processing..." : `Pay $${(total * 1.1).toFixed(2)}`}
+            Pay ${(total * 1.1).toFixed(2)}
           </Button>
           <p className="text-xs text-center text-muted-foreground mt-4">
             This is a secure 256-bit SSL encrypted payment.
