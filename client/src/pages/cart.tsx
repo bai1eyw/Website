@@ -94,10 +94,10 @@ export default function CartPage() {
         </div>
 
         <Button 
-          className="w-full h-12 bg-primary hover:bg-primary/90 text-white btn-glow text-lg font-bold"
+          className="w-full h-12 bg-primary hover:bg-primary/90 text-white btn-glow text-lg font-bold group"
           onClick={() => setLocation("/checkout")}
         >
-          <CreditCard className="mr-2 h-5 w-5" /> Proceed to Checkout
+          <CreditCard className="mr-2 h-5 w-5 text-black" /> Proceed to Checkout
         </Button>
         
         <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">

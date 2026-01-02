@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useCart } from "@/lib/cart";
+import { cn } from "@/lib/utils";
 import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -50,7 +51,7 @@ export default function ProductsPage() {
                 : "bg-transparent border-white/5 text-zinc-500 hover:text-white hover:bg-white/5 rounded-none text-[10px] font-mono tracking-widest h-8"
             }
           >
-            <Tag className="mr-1.5 h-3 w-3" /> {category.toUpperCase()}
+            <Tag className={cn("mr-1.5 h-3 w-3", activeCategory === category ? "text-black" : "text-current")} /> {category.toUpperCase()}
           </Button>
         ))}
       </div>

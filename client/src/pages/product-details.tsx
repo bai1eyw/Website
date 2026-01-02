@@ -119,7 +119,7 @@ export default function ProductDetailsPage() {
             disabled={product.stock === 0}
             className="flex-1 w-full sm:w-auto h-14 text-sm font-bold bg-white hover:bg-zinc-200 text-black rounded-none uppercase tracking-widest flex items-center justify-center gap-2"
           >
-            <ShoppingCart className="h-5 w-5" /> Add to basket
+            <ShoppingCart className="h-5 w-5 text-black" /> Add to basket
           </Button>
         </div>
 

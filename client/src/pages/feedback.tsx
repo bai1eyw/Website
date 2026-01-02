@@ -88,7 +88,7 @@ export default function FeedbackPage() {
                 size="lg"
                 className="bg-white text-black hover:bg-primary hover:text-white transition-all duration-500 rounded-full px-10 h-14 group"
               >
-                <MessageSquare className="mr-3 h-5 w-5 group-hover:rotate-12 transition-transform" /> 
+                <MessageSquare className="mr-3 h-5 w-5 group-hover:rotate-12 transition-transform text-black group-hover:text-white" /> 
                 WRITE A REVIEW
               </Button>
             </motion.div>

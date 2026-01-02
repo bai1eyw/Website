@@ -50,7 +50,7 @@ export default function Home() {
         >
           <Link href="/products">
             <Button size="lg" className="bg-white hover:bg-zinc-200 text-black font-bold text-sm px-8 h-12 rounded-none tracking-widest transition-all">
-              <ShoppingBag className="mr-2 h-4 w-4" /> Browse products <ArrowRight className="ml-2 h-4 w-4" />
+              <ShoppingBag className="mr-2 h-4 w-4 text-black" /> Browse products <ArrowRight className="ml-2 h-4 w-4 text-black" />
             </Button>
           </Link>
           <Link href="/status">
