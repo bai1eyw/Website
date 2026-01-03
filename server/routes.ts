@@ -83,10 +83,8 @@ export async function registerRoutes(
   });
 
   app.post("/api/feedback", async (req, res) => {
-    if (!req.isAuthenticated()) return res.sendStatus(401);
     const f = await storage.createFeedback({
       ...req.body,
-      userId: req.user.id
     });
     res.status(201).json(f);
   });

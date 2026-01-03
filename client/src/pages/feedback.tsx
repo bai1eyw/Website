@@ -1,12 +1,13 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { Star, MessageSquare, Quote, X, Send, UserCircle, ShieldCheck, Heart } from "lucide-react";
+import { Star, MessageSquare, Quote, X, Send, UserCircle, ShieldCheck, Heart, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Card } from "@/components/ui/card";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { apiRequest, queryClient } from "@/lib/queryClient";
 
 export default function FeedbackPage() {
   const { toast } = useToast();
@@ -14,49 +15,34 @@ export default function FeedbackPage() {
   const [rating, setRating] = useState(5);
   const [hoverRating, setHoverRating] = useState(0);
   
-  const [testimonials, setTestimonials] = useState([
-    {
-      user: "DragonSlayer99",
-      rating: 5,
-      content: "Insanely fast delivery! Got my Skeleton Spawner in literally 2 minutes. The price is unmatched.",
-      date: "2 days ago",
-      verified: true
+  const { data: testimonials = [], isLoading } = useQuery({
+    queryKey: ["/api/feedback"],
+  });
+
+  const mutation = useMutation({
+    mutationFn: async (newReview: any) => {
+      const res = await apiRequest("POST", "/api/feedback", newReview);
+      return res.json();
     },
-    {
-      user: "MinecraftMaster",
-      rating: 5,
-      content: "SB Services is the only place I trust for Donut SMP items. Very professional support on Discord.",
-      date: "1 week ago",
-      verified: true
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/feedback"] });
+      setIsFormOpen(false);
+      setRating(5);
+      toast({
+        title: "Review Published",
+        description: "Thank you for your feedback! Your review is now visible.",
+      });
     },
-    {
-      user: "PixelPioneer",
-      rating: 4,
-      content: "Great service, only downside was the minor wait during maintenance, but support kept me updated.",
-      date: "3 days ago",
-      verified: true
-    }
-  ]);
+  });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     
-    const newReview = {
-      user: formData.get("username") as string || "Anonymous",
+    mutation.mutate({
+      username: formData.get("username") as string || "Anonymous",
       rating: rating,
       content: formData.get("comment") as string || "Great service!",
-      date: "Just now",
-      verified: false
-    };
-
-    setTestimonials([newReview, ...testimonials]);
-    setIsFormOpen(false);
-    setRating(5);
-    
-    toast({
-      title: "Review Published",
-      description: "Thank you for your feedback! Your review is now visible.",
     });
   };
 
@@ -155,8 +141,17 @@ export default function FeedbackPage() {
                   </div>
                 </div>
 
-                <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-white font-bold h-14 rounded-xl text-lg tracking-tight btn-glow">
-                  <Send className="mr-3 h-5 w-5" /> PUBLISH TESTIMONIAL
+                <Button 
+                  type="submit" 
+                  disabled={mutation.isPending}
+                  className="w-full bg-primary hover:bg-primary/90 text-white font-bold h-14 rounded-xl text-lg tracking-tight btn-glow"
+                >
+                  {mutation.isPending ? (
+                    <Loader2 className="mr-3 h-5 w-5 animate-spin" />
+                  ) : (
+                    <Send className="mr-3 h-5 w-5" />
+                  )}
+                  PUBLISH TESTIMONIAL
                 </Button>
               </form>
             </motion.div>
@@ -165,44 +160,52 @@ export default function FeedbackPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <AnimatePresence mode="popLayout">
-          {testimonials.map((t, i) => (
-            <motion.div
-              key={t.user + t.date + i}
-              layout
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="glass-card p-8 rounded-3xl relative group hover:border-primary/30 transition-all duration-500"
-            >
-              <Quote className="absolute top-6 right-6 h-12 w-12 text-primary/5 group-hover:text-primary/10 transition-colors" />
-              
-              <div className="flex gap-1 mb-6">
-                {[...Array(5)].map((_, star) => (
-                  <Star 
-                    key={star} 
-                    className={`h-5 w-5 ${star < t.rating ? 'text-primary fill-primary' : 'text-zinc-800'}`} 
-                  />
-                ))}
-              </div>
+        {isLoading ? (
+          <div className="col-span-full flex justify-center py-20">
+            <Loader2 className="h-12 w-12 text-primary animate-spin" />
+          </div>
+        ) : (
+          <AnimatePresence mode="popLayout">
+            {testimonials.map((t: any, i: number) => (
+              <motion.div
+                key={t.id || i}
+                layout
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="glass-card p-8 rounded-3xl relative group hover:border-primary/30 transition-all duration-500"
+              >
+                <Quote className="absolute top-6 right-6 h-12 w-12 text-primary/5 group-hover:text-primary/10 transition-colors" />
+                
+                <div className="flex gap-1 mb-6">
+                  {[...Array(5)].map((_, star) => (
+                    <Star 
+                      key={star} 
+                      className={`h-5 w-5 ${star < t.rating ? 'text-primary fill-primary' : 'text-zinc-800'}`} 
+                    />
+                  ))}
+                </div>
 
-              <p className="text-zinc-300 text-lg leading-relaxed mb-8 font-light italic">"{t.content}"</p>
-              
-              <div className="flex items-center gap-4 pt-6 border-t border-white/5">
-                <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-primary/20 to-purple-500/20 border border-white/10 flex items-center justify-center text-primary font-bold text-xl group-hover:scale-110 transition-transform">
-                  {t.user.charAt(0)}
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold text-white text-base tracking-tight">{t.user}</span>
-                    {t.verified && <ShieldCheck className="h-4 w-4 text-primary fill-primary/10" />}
+                <p className="text-zinc-300 text-lg leading-relaxed mb-8 font-light italic">"{t.content}"</p>
+                
+                <div className="flex items-center gap-4 pt-6 border-t border-white/5">
+                  <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-primary/20 to-purple-500/20 border border-white/10 flex items-center justify-center text-primary font-bold text-xl group-hover:scale-110 transition-transform">
+                    {t.username ? t.username.charAt(0) : 'A'}
                   </div>
-                  <span className="text-zinc-500 text-xs font-mono uppercase tracking-widest">{t.date}</span>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold text-white text-base tracking-tight">{t.username || "Anonymous"}</span>
+                      {t.verified && <ShieldCheck className="h-4 w-4 text-primary fill-primary/10" />}
+                    </div>
+                    <span className="text-zinc-500 text-xs font-mono uppercase tracking-widest">
+                      {t.createdAt ? new Date(t.createdAt).toLocaleDateString() : "Just now"}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
-        </AnimatePresence>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        )}
       </div>
 
       <div className="glass-card p-16 rounded-[40px] text-center space-y-10 border-white/5 bg-gradient-to-b from-transparent to-primary/5">
