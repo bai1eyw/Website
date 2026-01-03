@@ -72,9 +72,9 @@ export default function FeedbackPage() {
               <Button 
                 onClick={() => setIsFormOpen(true)}
                 size="lg"
-                className="bg-white text-black hover:bg-primary hover:text-white transition-all duration-500 rounded-full px-10 h-14 group"
+                className="bg-white text-black hover:bg-white/90 transition-all duration-500 rounded-full px-10 h-14 group"
               >
-                <MessageSquare className="mr-3 h-5 w-5 group-hover:rotate-12 transition-transform text-black group-hover:text-white" /> 
+                <MessageSquare className="mr-3 h-5 w-5 group-hover:rotate-12 transition-transform text-black" /> 
                 WRITE A REVIEW
               </Button>
             </motion.div>
