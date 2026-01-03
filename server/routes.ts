@@ -87,8 +87,11 @@ export async function registerRoutes(
 
   app.post("/api/feedback", async (req, res) => {
     try {
+      const { username, content, rating } = req.body;
       const f = await storage.createFeedback({
-        ...req.body,
+        username: username || "Anonymous",
+        content,
+        rating,
         verified: false,
         createdAt: new Date(),
       });

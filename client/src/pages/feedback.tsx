@@ -38,9 +38,10 @@ export default function FeedbackPage() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
+    const username = (formData.get("username") as string || "").trim();
     
     mutation.mutate({
-      username: formData.get("username") as string || "Anonymous",
+      username: username || "Anonymous",
       rating: rating,
       content: formData.get("comment") as string || "Great service!",
     });
