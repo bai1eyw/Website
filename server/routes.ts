@@ -2,6 +2,11 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth } from "./auth";
+import Stripe from "stripe";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: "2025-01-27.acacia",
+});
 
 export async function registerRoutes(
   httpServer: Server,
@@ -12,6 +17,35 @@ export async function registerRoutes(
   app.get("/api/products", async (_req, res) => {
     const products = await storage.getProducts();
     res.json(products);
+  });
+
+  app.post("/api/create-checkout-session", async (req, res) => {
+    const { items } = req.body;
+
+    try {
+      const line_items = items.map((item: any) => ({
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: item.name,
+          },
+          unit_amount: Math.round(parseFloat(item.price) * 100),
+        },
+        quantity: item.quantity,
+      }));
+
+      const session = await stripe.checkout.sessions.create({
+        payment_method_types: ["card"],
+        line_items,
+        mode: "payment",
+        success_url: `${req.headers.origin}/status?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${req.headers.origin}/cart`,
+      });
+
+      res.json({ id: session.id });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
   });
 
   app.get("/api/feedback", async (_req, res) => {
