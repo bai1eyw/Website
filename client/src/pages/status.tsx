@@ -1,22 +1,9 @@
 import { useCart } from "@/lib/cart";
 import { motion } from "framer-motion";
-import { CheckCircle2, Package, AlertCircle, Activity, Box, Zap, Loader2 } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
+import { CheckCircle2, Package, AlertCircle, Activity, Box, Zap } from "lucide-react";
 
 export default function StatusPage() {
-  const { data: products = [], isLoading } = useQuery({
-    queryKey: ["/api/products"],
-    refetchInterval: 5000, // Refresh every 5 seconds for live status
-  });
-
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center min-h-[400px]">
-        <Loader2 className="h-12 w-12 text-primary animate-spin" />
-      </div>
-    );
-  }
-
+  const { products } = useCart();
   return (
     <div className="max-w-3xl mx-auto space-y-12">
       <div className="text-center space-y-4">
@@ -38,13 +25,12 @@ export default function StatusPage() {
 
         <div className="grid gap-4">
           {products.map((product, i) => {
-            const productData = product as any;
-            const isLowStock = productData.stock !== undefined && productData.stock < 10;
-            const isOutOfStock = productData.stock === 0;
+            const isLowStock = product.stock !== undefined && product.stock < 10;
+            const isOutOfStock = product.stock === 0;
 
             return (
               <motion.div 
-                key={productData.id} 
+                key={product.id} 
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.05 }}
@@ -52,13 +38,13 @@ export default function StatusPage() {
               >
                 <div className="flex items-center gap-4">
                   <div className="h-12 w-12 bg-black border border-white/10 overflow-hidden relative">
-                    <img src={productData.image} alt={productData.name} className="h-full w-full object-cover group-hover:scale-110 transition-transform" />
+                    <img src={product.image} alt={product.name} className="h-full w-full object-cover group-hover:scale-110 transition-transform" />
                     <div className="absolute inset-0 bg-primary/10 mix-blend-overlay" />
                   </div>
                   <div>
-                    <span className="text-zinc-200 text-sm font-medium block uppercase tracking-tight group-hover:text-primary transition-colors">{productData.name}</span>
+                    <span className="text-zinc-200 text-sm font-medium block uppercase tracking-tight group-hover:text-primary transition-colors">{product.name}</span>
                     <span className="text-[9px] text-zinc-600 uppercase tracking-widest font-mono flex items-center gap-1">
-                      <Box className="h-2 w-2" /> {productData.category}
+                      <Box className="h-2 w-2" /> {product.category}
                     </span>
                   </div>
                 </div>
@@ -67,7 +53,7 @@ export default function StatusPage() {
                   <div className="hidden sm:flex flex-col items-end">
                     <span className="text-[8px] text-zinc-700 uppercase font-bold tracking-[0.2em] font-mono">Stock_Level</span>
                     <span className={`text-xs font-mono ${isOutOfStock ? 'text-red-500' : isLowStock ? 'text-yellow-500' : 'text-green-500'}`}>
-                      {productData.stock !== undefined ? productData.stock.toLocaleString() : "UNLIMITED"}
+                      {product.stock !== undefined ? product.stock.toLocaleString() : "UNLIMITED"}
                     </span>
                   </div>
                   
