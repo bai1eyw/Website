@@ -8,7 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { loadStripe } from "@stripe/stripe-js";
 import { apiRequest } from "@/lib/queryClient";
 
-const stripePromise = loadStripe("pk_test_51SkyD4LKGnsPJKzBqrpFhkmDDcytsjzLjOk8dffxusRbDk3XZ0pRPOZs5BrQMq32OCBzfTdhfsI2eanS76fQz4ou00tSb0ONR3");
+const stripePromise = loadStripe("pk_test_51P7Y7vP1Z4Vz5v8z7P7z7P7z7P7z7P7z7P7z7P7z7P7z7P7z7P7z7P7z7P7z7P7z7P7z7P7z7P7z7P7z7P7z7P");
 
 export default function CheckoutPage() {
   const { items, total } = useCart();

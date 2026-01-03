@@ -39,6 +39,9 @@ export async function registerRoutes(
         mode: "payment",
         success_url: `${req.headers.origin}/order-status?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${req.headers.origin}/cart`,
+        metadata: {
+          items: JSON.stringify(items.map((i: any) => ({ id: i.id, quantity: i.quantity })))
+        }
       });
 
       res.json({ url: session.url });
@@ -54,13 +57,12 @@ export async function registerRoutes(
       });
 
       if (session.payment_status === "paid" && session.metadata?.processed !== "true") {
-        const lineItems = session.line_items?.data || [];
-        for (const item of lineItems) {
-          const allProducts = await storage.getProducts();
-          const product = allProducts.find(p => p.name === item.description);
+        const metadataItems = session.metadata?.items ? JSON.parse(session.metadata.items) : [];
+        
+        for (const item of metadataItems) {
+          const product = await storage.getProduct(item.id);
           
           if (product && product.stock !== undefined) {
-            // Deduct the quantity purchased from the stock
             const quantityPurchased = item.quantity || 0;
             const newStock = Math.max(0, product.stock - quantityPurchased);
             await storage.updateProductStock(product.id, newStock);
@@ -68,7 +70,7 @@ export async function registerRoutes(
         }
         
         await stripe.checkout.sessions.update(req.params.id, {
-          metadata: { processed: "true" }
+          metadata: { ...session.metadata, processed: "true" }
         });
       }
 
