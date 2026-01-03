@@ -144,7 +144,7 @@ export default function FeedbackPage() {
                 <Button 
                   type="submit" 
                   disabled={mutation.isPending}
-                  className="w-full bg-primary hover:bg-primary/90 text-white font-bold h-14 rounded-xl text-lg tracking-tight btn-glow"
+                  className="w-full bg-primary hover:bg-white text-black font-bold h-14 rounded-xl text-lg tracking-tight btn-glow"
                 >
                   {mutation.isPending ? (
                     <Loader2 className="mr-3 h-5 w-5 animate-spin" />
