@@ -76,3 +76,17 @@ Preferred communication style: Simple, everyday language.
 ### Environment Variables Required
 - `DATABASE_URL`: PostgreSQL connection string
 - `SESSION_SECRET`: Secret key for session encryption (falls back to default in dev)
+- `STRIPE_SECRET_KEY`: Stripe API key for payment processing (stored as a Replit secret)
+
+### Payment Integration
+- **Stripe**: Used for checkout sessions and payment processing
+- **Note**: User declined the Replit Stripe connector integration, so STRIPE_SECRET_KEY is stored as a manual secret
+- **Endpoints**: 
+  - `/api/create-checkout-session`: Creates Stripe checkout session
+  - `/api/checkout-session/:id`: Retrieves session status and updates inventory
+
+## Recent Updates (January 3, 2026)
+- Completed project import to Replit environment
+- Configured workflow to run on port 5000 with webview output
+- Added STRIPE_SECRET_KEY as a Replit secret for payment processing
+- Verified application is running successfully with all features working
