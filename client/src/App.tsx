@@ -29,8 +29,8 @@ function Router() {
         <Route path="/cart" component={Cart} />
         <Route path="/login" component={Login} />
         <Route path="/checkout" component={Checkout} />
-        <Route path="/status" component={OrderStatus} />
-        <Route path="/inventory-status" component={Status} />
+        <Route path="/status" component={Status} />
+        <Route path="/order-status" component={OrderStatus} />
         <Route path="/feedback" component={Feedback} />
         <Route path="/tos" component={TOS} />
         <Route path="/privacy" component={Privacy} />

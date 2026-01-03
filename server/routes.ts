@@ -37,7 +37,7 @@ export async function registerRoutes(
       const session = await stripe.checkout.sessions.create({
         line_items,
         mode: "payment",
-        success_url: `${req.headers.origin}/status?session_id={CHECKOUT_SESSION_ID}`,
+        success_url: `${req.headers.origin}/order-status?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${req.headers.origin}/cart`,
       });
 
