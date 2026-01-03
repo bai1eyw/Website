@@ -93,7 +93,6 @@ export async function registerRoutes(
         content,
         rating,
         verified: false,
-        createdAt: new Date(),
       });
       res.status(201).json(f);
     } catch (error: any) {
