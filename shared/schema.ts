@@ -31,8 +31,10 @@ export const orders = pgTable("orders", {
 export const feedback = pgTable("feedback", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   userId: varchar("user_id").references(() => users.id),
+  username: text("username"),
   content: text("content").notNull(),
   rating: integer("rating").notNull(),
+  verified: boolean("verified").default(false),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
