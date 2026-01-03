@@ -35,14 +35,13 @@ export async function registerRoutes(
       }));
 
       const session = await stripe.checkout.sessions.create({
-        payment_method_types: ["card"],
         line_items,
         mode: "payment",
         success_url: `${req.headers.origin}/status?session_id={CHECKOUT_SESSION_ID}`,
         cancel_url: `${req.headers.origin}/cart`,
       });
 
-      res.json({ id: session.id });
+      res.json({ url: session.url });
     } catch (error: any) {
       res.status(500).json({ error: error.message });
     }

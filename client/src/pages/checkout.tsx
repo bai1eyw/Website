@@ -17,18 +17,13 @@ export default function CheckoutPage() {
   const handleCheckout = async () => {
     setLoading(true);
     try {
-      const stripe = await stripePromise;
-      if (!stripe) throw new Error("Stripe failed to load");
-
       const response = await apiRequest("POST", "/api/create-checkout-session", { items });
-      const session = await response.json();
+      const { url } = await response.json();
 
-      const { error } = await stripe.redirectToCheckout({
-        sessionId: session.id,
-      });
-
-      if (error) {
-        throw new Error(error.message);
+      if (url) {
+        window.location.href = url;
+      } else {
+        throw new Error("Failed to create checkout session URL");
       }
     } catch (error: any) {
       toast({
