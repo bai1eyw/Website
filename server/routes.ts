@@ -54,21 +54,19 @@ export async function registerRoutes(
       });
 
       if (session.payment_status === "paid" && session.metadata?.processed !== "true") {
-        // Update stock for each item
         const lineItems = session.line_items?.data || [];
         for (const item of lineItems) {
-          // Use name mapping to find the product and update its stock
           const allProducts = await storage.getProducts();
           const product = allProducts.find(p => p.name === item.description);
           
           if (product && product.stock !== undefined) {
+            // Deduct the quantity purchased from the stock
             const quantityPurchased = item.quantity || 0;
             const newStock = Math.max(0, product.stock - quantityPurchased);
             await storage.updateProductStock(product.id, newStock);
           }
         }
         
-        // Mark as processed to prevent double-deduction
         await stripe.checkout.sessions.update(req.params.id, {
           metadata: { processed: "true" }
         });
