@@ -17,6 +17,11 @@ export default function FeedbackPage() {
   
   const { data: testimonials = [], isLoading } = useQuery({
     queryKey: ["/api/feedback"],
+    queryFn: async () => {
+      const res = await fetch("/api/feedback");
+      if (!res.ok) throw new Error("Failed to fetch feedback");
+      return res.json();
+    }
   });
 
   const mutation = useMutation({
