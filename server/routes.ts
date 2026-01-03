@@ -5,7 +5,7 @@ import { setupAuth } from "./auth";
 import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2025-01-27.acacia",
+  apiVersion: "2025-12-15.clover",
 });
 
 export async function registerRoutes(
@@ -43,6 +43,15 @@ export async function registerRoutes(
       });
 
       res.json({ id: session.id });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  app.get("/api/checkout-session/:id", async (req, res) => {
+    try {
+      const session = await stripe.checkout.sessions.retrieve(req.params.id);
+      res.json({ status: session.payment_status });
     } catch (error: any) {
       res.status(500).json({ error: error.message });
     }

@@ -14,6 +14,7 @@ import Cart from "@/pages/cart";
 import Checkout from "@/pages/checkout";
 import Login from "@/pages/login";
 import Status from "@/pages/status";
+import OrderStatus from "@/pages/order-status";
 import Feedback from "@/pages/feedback";
 import TOS from "@/pages/tos";
 import Privacy from "@/pages/privacy";
@@ -28,7 +29,8 @@ function Router() {
         <Route path="/cart" component={Cart} />
         <Route path="/login" component={Login} />
         <Route path="/checkout" component={Checkout} />
-        <Route path="/status" component={Status} />
+        <Route path="/status" component={OrderStatus} />
+        <Route path="/inventory-status" component={Status} />
         <Route path="/feedback" component={Feedback} />
         <Route path="/tos" component={TOS} />
         <Route path="/privacy" component={Privacy} />

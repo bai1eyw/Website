@@ -23,12 +23,12 @@ export default function CheckoutPage() {
       const response = await apiRequest("POST", "/api/create-checkout-session", { items });
       const session = await response.json();
 
-      const result = await stripe.redirectToCheckout({
+      const { error } = await stripe.redirectToCheckout({
         sessionId: session.id,
       });
 
-      if (result.error) {
-        throw new Error(result.error.message);
+      if (error) {
+        throw new Error(error.message);
       }
     } catch (error: any) {
       toast({
