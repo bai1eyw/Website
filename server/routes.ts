@@ -49,7 +49,28 @@ export async function registerRoutes(
 
   app.get("/api/checkout-session/:id", async (req, res) => {
     try {
-      const session = await stripe.checkout.sessions.retrieve(req.params.id);
+      const session = await stripe.checkout.sessions.retrieve(req.params.id, {
+        expand: ["line_items"],
+      });
+
+      if (session.payment_status === "paid" && session.metadata?.processed !== "true") {
+        // Update stock for each item
+        const lineItems = session.line_items?.data || [];
+        for (const item of lineItems) {
+          const product = await storage.getProducts();
+          const p = product.find(p => p.name === item.description);
+          if (p && p.stock !== undefined) {
+            const newStock = Math.max(0, p.stock - (item.quantity || 0));
+            await storage.updateProductStock(p.id, newStock);
+          }
+        }
+        
+        // Mark as processed in Stripe metadata (conceptual, for real apps use webhooks + DB flag)
+        await stripe.checkout.sessions.update(req.params.id, {
+          metadata: { processed: "true" }
+        });
+      }
+
       res.json({ status: session.payment_status });
     } catch (error: any) {
       res.status(500).json({ error: error.message });
