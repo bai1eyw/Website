@@ -57,15 +57,18 @@ export async function registerRoutes(
         // Update stock for each item
         const lineItems = session.line_items?.data || [];
         for (const item of lineItems) {
-          const product = await storage.getProducts();
-          const p = product.find(p => p.name === item.description);
-          if (p && p.stock !== undefined) {
-            const newStock = Math.max(0, p.stock - (item.quantity || 0));
-            await storage.updateProductStock(p.id, newStock);
+          // Use name mapping to find the product and update its stock
+          const allProducts = await storage.getProducts();
+          const product = allProducts.find(p => p.name === item.description);
+          
+          if (product && product.stock !== undefined) {
+            const quantityPurchased = item.quantity || 0;
+            const newStock = Math.max(0, product.stock - quantityPurchased);
+            await storage.updateProductStock(product.id, newStock);
           }
         }
         
-        // Mark as processed in Stripe metadata (conceptual, for real apps use webhooks + DB flag)
+        // Mark as processed to prevent double-deduction
         await stripe.checkout.sessions.update(req.params.id, {
           metadata: { processed: "true" }
         });
