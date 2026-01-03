@@ -84,10 +84,16 @@ export async function registerRoutes(
   });
 
   app.post("/api/feedback", async (req, res) => {
-    const f = await storage.createFeedback({
-      ...req.body,
-    });
-    res.status(201).json(f);
+    try {
+      const f = await storage.createFeedback({
+        ...req.body,
+        verified: false,
+        createdAt: new Date(),
+      });
+      res.status(201).json(f);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message });
+    }
   });
 
   return httpServer;
