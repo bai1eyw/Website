@@ -1,5 +1,6 @@
 import { useRoute } from "wouter";
 import { useCart } from "@/lib/cart";
+import { useCurrency } from "@/lib/currency";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Check, ShieldCheck, Zap, Minus, Plus } from "lucide-react";
 import NotFound from "@/pages/not-found";
@@ -9,12 +10,15 @@ import { useState } from "react";
 export default function ProductDetailsPage() {
   const [match, params] = useRoute("/products/:id");
   const { addToCart, products } = useCart();
+  const { convert } = useCurrency();
   const [quantity, setQuantity] = useState(1);
   
   if (!match) return <NotFound />;
   
   const product = products.find(p => p.id === params.id);
   if (!product) return <NotFound />;
+
+  const { amount, symbol } = convert(product.price);
 
   const increment = () => {
     if (product.stock !== undefined && quantity < product.stock) {
@@ -57,7 +61,7 @@ export default function ProductDetailsPage() {
           </span>
           <h1 className="text-4xl md:text-5xl font-display font-bold text-white mb-4 uppercase tracking-tighter">{product.name}</h1>
           <div className="flex items-center gap-4 mb-4">
-            <p className="text-3xl font-mono text-white font-bold">€{product.price.toFixed(2)}</p>
+            <p className="text-3xl font-mono text-white font-bold">{symbol}{amount.toFixed(2)}</p>
             {product.stock !== undefined && (
               <span className={`px-3 py-1 rounded-none text-[10px] font-mono tracking-widest border ${
                 product.stock === 0 ? "text-zinc-800 border-zinc-800/50" : 

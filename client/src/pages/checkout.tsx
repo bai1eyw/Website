@@ -1,4 +1,5 @@
 import { useCart } from "@/lib/cart";
+import { useCurrency } from "@/lib/currency";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
@@ -11,6 +12,7 @@ const stripePromise = loadStripe("pk_test_51SkyD4LKGnsPJKzBqrpFhkmDDcytsjzLjOk8d
 
 export default function CheckoutPage() {
   const { items, total } = useCart();
+  const { convert } = useCurrency();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
 
@@ -55,16 +57,16 @@ export default function CheckoutPage() {
         <div className="space-y-4">
           <div className="flex justify-between text-lg text-gray-300">
             <span>Subtotal</span>
-            <span>${total.toFixed(2)}</span>
+            <span>{convert(total).symbol}{convert(total).amount.toFixed(2)}</span>
           </div>
           <div className="flex justify-between text-lg text-gray-300">
             <span>Service Fee (10%)</span>
-            <span>${(total * 0.1).toFixed(2)}</span>
+            <span>{convert(total * 0.1).symbol}{convert(total * 0.1).amount.toFixed(2)}</span>
           </div>
           <div className="h-px bg-white/10 my-4" />
           <div className="flex justify-between text-2xl font-bold text-white">
             <span>Total</span>
-            <span>${(total * 1.1).toFixed(2)}</span>
+            <span>{convert(total * 1.1).symbol}{convert(total * 1.1).amount.toFixed(2)}</span>
           </div>
         </div>
 
@@ -77,7 +79,7 @@ export default function CheckoutPage() {
             disabled={loading}
             className="w-full h-14 text-lg bg-primary hover:bg-primary/90 text-white btn-glow rounded-xl"
           >
-            {loading ? "Processing..." : `Pay ${(total * 1.1).toFixed(2)}`}
+            {loading ? "Processing..." : `Pay ${convert(total * 1.1).symbol}${convert(total * 1.1).amount.toFixed(2)}`}
           </Button>
         </div>
         

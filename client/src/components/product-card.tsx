@@ -4,9 +4,12 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, ArrowRight, Tag, Box } from "lucide-react";
 import { useCart } from "@/lib/cart";
+import { useCurrency } from "@/lib/currency";
 
 export function ProductCard({ product, index = 0 }: { product: Product; index?: number }) {
   const { addToCart } = useCart();
+  const { convert } = useCurrency();
+  const { amount, symbol } = convert(product.price);
 
   return (
     <motion.div
@@ -48,13 +51,16 @@ export function ProductCard({ product, index = 0 }: { product: Product; index?: 
         <div className="flex items-end justify-between mb-4">
           <div className="flex flex-col">
             <span className="text-xl font-bold text-white">
-              €{product.price.toFixed(2)}
+              {symbol}{amount.toFixed(2)}
             </span>
-            {product.originalPrice && (
-              <span className="text-xs text-muted-foreground line-through">
-                €{product.originalPrice.toFixed(2)}
-              </span>
-            )}
+            {product.originalPrice && (() => {
+              const { amount: origAmount } = convert(product.originalPrice);
+              return (
+                <span className="text-xs text-muted-foreground line-through">
+                  {symbol}{origAmount.toFixed(2)}
+                </span>
+              );
+            })()}
           </div>
         </div>
 

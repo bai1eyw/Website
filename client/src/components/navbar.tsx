@@ -1,15 +1,25 @@
 import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
-import { ShoppingCart, User, Menu, X } from "lucide-react";
+import { ShoppingCart, User, Menu, X, Globe } from "lucide-react";
 import { useState } from "react";
 import { useCart } from "@/lib/cart";
+import { useCurrency } from "@/lib/currency";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export function Navbar() {
   const [location] = useLocation();
   const { itemCount } = useCart();
+  const { currency, setCurrency } = useCurrency();
   const [isOpen, setIsOpen] = useState(false);
+
+  const currencies: ("USD" | "GBP" | "EUR" | "JPY")[] = ["USD", "GBP", "EUR", "JPY"];
 
   const navItems = [
     { name: "Home", path: "/" },
@@ -69,6 +79,32 @@ export function Navbar() {
 
         {/* Actions */}
         <div className="flex items-center gap-2">
+          {/* Currency Switcher */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="sm" className="text-zinc-500 hover:text-white transition-colors flex items-center gap-2 px-2">
+                <Globe className="h-4 w-4" />
+                <span className="text-[10px] font-mono tracking-widest uppercase">{currency}</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="glass border-white/10 bg-black/80 text-white">
+              {currencies.map((c) => (
+                <DropdownMenuItem
+                  key={c}
+                  onClick={() => setCurrency(c)}
+                  className={cn(
+                    "text-[10px] font-mono tracking-widest uppercase hover:bg-white/10 cursor-pointer",
+                    currency === c ? "text-primary" : "text-white/70"
+                  )}
+                >
+                  {c}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <div className="h-6 w-px bg-white/10 mx-1" />
+
           <Link href="/cart">
             <Button variant="ghost" size="icon" className="text-white relative hover:bg-white/10 hover:text-primary transition-colors">
               <ShoppingCart className="h-5 w-5" />

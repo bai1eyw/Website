@@ -1,4 +1,5 @@
 import { useCart } from "@/lib/cart";
+import { useCurrency } from "@/lib/currency";
 import { Button } from "@/components/ui/button";
 import { Trash2, Plus, Minus, CreditCard, ShoppingBag } from "lucide-react";
 import { Link, useLocation } from "wouter";
@@ -6,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 export default function CartPage() {
   const { items, removeFromCart, updateQuantity, total, clearCart } = useCart();
+  const { convert } = useCurrency();
   const [_, setLocation] = useLocation();
 
   if (items.length === 0) {
@@ -28,49 +30,52 @@ export default function CartPage() {
         <h1 className="text-3xl font-display font-bold text-white mb-6">Shopping Cart</h1>
         
         <AnimatePresence>
-          {items.map((item) => (
-            <motion.div
-              key={item.id}
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="glass p-4 rounded-xl flex gap-4 items-center"
-            >
-              <div className="h-20 w-20 rounded-lg overflow-hidden shrink-0 bg-black/50">
-                <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
-              </div>
-              
-              <div className="flex-grow">
-                <h3 className="font-bold text-white">{item.name}</h3>
-                <p className="text-primary font-mono">${item.price}</p>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <Button 
-                  variant="outline" size="icon" className="h-8 w-8 rounded-full border-white/10 hover:bg-white/10 text-white"
-                  onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                  disabled={item.quantity <= 1}
-                >
-                  <Minus className="h-3 w-3" />
-                </Button>
-                <span className="w-8 text-center text-white">{item.quantity}</span>
-                <Button 
-                  variant="outline" size="icon" className="h-8 w-8 rounded-full border-white/10 hover:bg-white/10 text-white"
-                  onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                >
-                  <Plus className="h-3 w-3" />
-                </Button>
-              </div>
-
-              <Button 
-                variant="ghost" size="icon" 
-                className="text-muted-foreground hover:text-red-500 hover:bg-red-500/10"
-                onClick={() => removeFromCart(item.id)}
+          {items.map((item) => {
+            const { amount, symbol } = convert(item.price);
+            return (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                className="glass p-4 rounded-xl flex gap-4 items-center"
               >
-                <Trash2 className="h-5 w-5" />
-              </Button>
-            </motion.div>
-          ))}
+                <div className="h-20 w-20 rounded-lg overflow-hidden shrink-0 bg-black/50">
+                  <img src={item.image} alt={item.name} className="h-full w-full object-cover" />
+                </div>
+                
+                <div className="flex-grow">
+                  <h3 className="font-bold text-white">{item.name}</h3>
+                  <p className="text-primary font-mono">{symbol}{amount.toFixed(2)}</p>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <Button 
+                    variant="outline" size="icon" className="h-8 w-8 rounded-full border-white/10 hover:bg-white/10 text-white"
+                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                    disabled={item.quantity <= 1}
+                  >
+                    <Minus className="h-3 w-3" />
+                  </Button>
+                  <span className="w-8 text-center text-white">{item.quantity}</span>
+                  <Button 
+                    variant="outline" size="icon" className="h-8 w-8 rounded-full border-white/10 hover:bg-white/10 text-white"
+                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                  >
+                    <Plus className="h-3 w-3" />
+                  </Button>
+                </div>
+
+                <Button 
+                  variant="ghost" size="icon" 
+                  className="text-muted-foreground hover:text-red-500 hover:bg-red-500/10"
+                  onClick={() => removeFromCart(item.id)}
+                >
+                  <Trash2 className="h-5 w-5" />
+                </Button>
+              </motion.div>
+            );
+          })}
         </AnimatePresence>
       </div>
 
@@ -80,16 +85,16 @@ export default function CartPage() {
         <div className="space-y-2 text-sm">
           <div className="flex justify-between text-muted-foreground">
             <span>Subtotal</span>
-            <span>${total.toFixed(2)}</span>
+            <span>{convert(total).symbol}{convert(total).amount.toFixed(2)}</span>
           </div>
           <div className="flex justify-between text-muted-foreground">
             <span>Taxes (est.)</span>
-            <span>${(total * 0.1).toFixed(2)}</span>
+            <span>{convert(total * 0.1).symbol}{convert(total * 0.1).amount.toFixed(2)}</span>
           </div>
           <div className="h-px bg-white/10 my-4" />
           <div className="flex justify-between text-lg font-bold text-white">
             <span>Total</span>
-            <span>${(total * 1.1).toFixed(2)}</span>
+            <span>{convert(total * 1.1).symbol}{convert(total * 1.1).amount.toFixed(2)}</span>
           </div>
         </div>
 
